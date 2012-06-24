@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
+	<classpathentry kind="lib" path="lib/eclipselink/eclipselink-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/eclipselink/eclipselink-javax.persistence-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/eclipselinkmodelgen/eclipselink-jpa-modelgen-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/ejb3-persistence/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/asm-attrs.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/asm.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/cglib-2.1.3.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/ehcache-1.2.3.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/hibernate-tools.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/hibernate3.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/jdbc2_0-stdext.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-persistence/jta.jar"/>
+	<classpathentry kind="lib" path="lib/MySQLDriver/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
 </classpath>
