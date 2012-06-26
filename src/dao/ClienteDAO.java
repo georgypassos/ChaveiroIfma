@@ -7,11 +7,10 @@ public class ClienteDAO extends Dao {
 	private static final ClienteDAO clienteDAO = new ClienteDAO();
 	
 	public static ClienteDAO getInstance(){
-		
 		return clienteDAO;
 	}
 	
-	//método de teste
+	//mï¿½todo de teste
 	public void inserir(Cliente cliente){
 		
 		em.getTransaction().begin();
@@ -22,14 +21,14 @@ public class ClienteDAO extends Dao {
         
 	}
 	
-	//método main só para criar o banco
+	//mï¿½todo main sï¿½ para criar o banco
 	public static void main(String[] args) {
 		ClienteDAO c = ClienteDAO.getInstance();
 		
 		Cliente cliente = new Cliente();
 		
-		cliente.setNome("Georgy");
-		cliente.setSenha("georgysenhaa");
+		cliente.setNome("Tayna");
+		cliente.setSenha("taynasenhaa");
 		
 		c.inserir(cliente);
 		
