@@ -1,36 +1,41 @@
 package dao;
 
+import java.util.List;
+
 import entidade.Cliente;
 
-public class ClienteDAO extends Dao {
+public class ClienteDAO extends Dao<Cliente> {
 	
 	private static final ClienteDAO clienteDAO = new ClienteDAO();
 	
+	private ClienteDAO(){
+		super(Cliente.class);
+	}
+	
 	public static ClienteDAO getInstance(){
+		
 		return clienteDAO;
 	}
 	
-	//mï¿½todo de teste
+	//método de teste
 	public void inserir(Cliente cliente){
 		
-		em.getTransaction().begin();
-        em.persist(cliente);
-        em.getTransaction().commit();
+		insert(cliente);
         
         System.out.println("Cliente salvo com sucesso!");
-        
 	}
 	
-	//mï¿½todo main sï¿½ para criar o banco
+	//método main só para criar o banco
 	public static void main(String[] args) {
 		ClienteDAO c = ClienteDAO.getInstance();
 		
-		Cliente cliente = new Cliente();
+		String sql = "FROM Cliente c WHERE c.nome like :p0 AND c.senha = :p1";
 		
-		cliente.setNome("Tayna");
-		cliente.setSenha("taynasenhaa");
+		List<Cliente> list = c.search(sql, "%geo%", "georgysenhaa");
 		
-		c.inserir(cliente);
+		for (Cliente cliente : list) {
+			System.out.println(cliente.getIdcliente() + " - " + cliente.getNome());
+		}
 		
 	}
 	
