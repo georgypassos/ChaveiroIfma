@@ -25,7 +25,7 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 	public TelaEmprestimo() {
 		super("Empréstimo de chaves");
 		
-		setBounds(100, 100, 443, 402);
+		setBounds(100, 100, 457, 444);
 		getContentPane().setLayout(new GridLayout(3, 4, 2, 2));
 		
 		utilidades.formataJanela(this, "/imagens/imgchave.png");
@@ -59,17 +59,25 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 				img = utilidades.imgBtSalaFechada;
 			}
 			
-			String texto = s.getCodigo()+"\nCliente: "+s.getUltimoCliente().getNome()+"\nData retirada: "+s.getUltimoEmprestimo().getDataRetirada();
+			String texto = s.getCodigo();
+			
+			try {
+				texto += "<br><br><b>Cliente:</b> "+s.getUltimoCliente().getNome()+
+						 "<br><b>Retirada:</b> "+utilidades.getData(s.getUltimoEmprestimo().getDataRetirada(), "dd/MM HH:mm");
+				
+				texto = utilidades.getHtml(texto);
+			} catch (Exception e) { }
 			
 			b = new JButton(texto, img);
 			b.setName(""+s.getIdsala());
 			b.addActionListener(this);
 			
+			b.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 			b.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 			b.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 			b.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 			
-			this.add(b);
+			getContentPane().add(b);
 		}
 		
 	}
@@ -89,7 +97,7 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		
 	}
 	
-	private void mostrarStatusSala(){
+	private void autenticacao(){
 		
 		
 		

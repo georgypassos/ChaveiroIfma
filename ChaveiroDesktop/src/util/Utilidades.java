@@ -1,5 +1,9 @@
 package util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -33,6 +37,32 @@ public class Utilidades {
 	public void configuraTabela(String... columns){
 		
 		
+	}
+	
+	public Date getData(String data, String inType, String outType) {
+
+        try {
+            SimpleDateFormat inFmt = new SimpleDateFormat(inType);
+            SimpleDateFormat outFmt = new SimpleDateFormat(outType);
+
+            return outFmt.parse(outFmt.format(inFmt.parse(data)));
+
+        } catch (ParseException ex) {
+        }
+
+        return null;
+    }
+
+    public String getData(Date data, String type) {
+
+        SimpleDateFormat fmt = new SimpleDateFormat(type);
+
+        return fmt.format(data);
+    }
+	
+	public String getHtml(String msg){
+		
+		return "<html>" + msg + "</html>";
 	}
 
 	public int getYesNoOption(String msg) {
