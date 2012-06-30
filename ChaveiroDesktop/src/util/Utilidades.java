@@ -7,13 +7,15 @@ public class Utilidades {
 
 	private static final Utilidades utilidades = new Utilidades();
 
-	private Utilidades() {
-	}
+	private Utilidades() { }
 
 	public static Utilidades getInstance() {
 
 		return utilidades;
 	}
+	
+	public ImageIcon imgBtSalaAberta = new ImageIcon(getClass().getResource("/imagens/lock-open.png"));
+	public ImageIcon imgBtSalaFechada = new ImageIcon(getClass().getResource("/imagens/lock-close.png"));
 
 	// formata um "JInternalFrame"
 	public void formataJanela(javax.swing.JInternalFrame gui, String srcImagem) {
@@ -29,8 +31,6 @@ public class Utilidades {
 	}
 	
 	public void configuraTabela(String... columns){
-		
-		
 		
 		
 	}

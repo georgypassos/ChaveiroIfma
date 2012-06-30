@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import dao.SalaDAO;
@@ -49,9 +50,24 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		
 		JButton b;
 		for(Sala s : listSala){
-			b = new JButton(s.getCodigo());
+			
+			ImageIcon img;
+			if(s.getStatus() == true){
+				img = utilidades.imgBtSalaAberta;
+			}
+			else{
+				img = utilidades.imgBtSalaFechada;
+			}
+			
+			String texto = s.getCodigo()+"\nCliente: "+s.getUltimoCliente().getNome()+"\nData retirada: "+s.getUltimoEmprestimo().getDataRetirada();
+			
+			b = new JButton(texto, img);
 			b.setName(""+s.getIdsala());
 			b.addActionListener(this);
+			
+			b.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+			b.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+			b.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 			
 			this.add(b);
 		}
@@ -65,16 +81,26 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		
 		int idSala = Integer.parseInt(b.getName());
 		
-		salaDAO.get(idSala);
+		Sala s = getSala(idSala);
+		
+		System.out.println(s.getUltimoCliente());
 		
 		System.out.println("idSala do botão clicado: " + idSala);
 		
 	}
 	
-	private Sala getSala(){
+	private void mostrarStatusSala(){
+		
+		
+		
+	}
+	
+	private Sala getSala(int id){
 		
 		for(Sala s : listSala){
-			
+			if(id == s.getIdsala()){
+				return s;
+			}
 		}
 		
 		return null;

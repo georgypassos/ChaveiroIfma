@@ -25,6 +25,5 @@
 	<classpathentry kind="lib" path="lib/hibernate-persistence/jta.jar"/>
 	<classpathentry kind="lib" path="lib/MySQLDriver/mysql-connector-java-5.1.13-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

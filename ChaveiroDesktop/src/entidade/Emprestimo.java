@@ -27,11 +27,11 @@ public class Emprestimo implements Serializable {
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dataEntrega;
 
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name = "cliente")
     private Cliente cliente;
 
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name = "sala")
     private Sala sala;
 

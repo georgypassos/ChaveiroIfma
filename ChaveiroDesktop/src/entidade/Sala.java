@@ -56,6 +56,26 @@ public class Sala implements Serializable {
 	public List<Emprestimo> getListEmprestimo() {
 		return listEmprestimo;
 	}
+	
+	public Emprestimo getUltimoEmprestimo(){
+		
+		if(listEmprestimo != null && listEmprestimo.size()>0){
+			return listEmprestimo.get(listEmprestimo.size()-1);
+		}
+		
+		return null;
+	}
+	
+	public Cliente getUltimoCliente(){
+		
+		Emprestimo e = getUltimoEmprestimo();
+		if(e != null){
+			
+			return e.getCliente();
+		}
+		
+		return null;
+	}
 
 	public void setListEmprestimo(List<Emprestimo> listEmprestimo) {
 		this.listEmprestimo = listEmprestimo;
