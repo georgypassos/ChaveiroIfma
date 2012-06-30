@@ -13,6 +13,8 @@ import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import dao.ClienteDAO;
+
 public class FramePrincipal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -28,8 +30,8 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	private JMenuItem mntmCliente;
 	private JMenuItem mntmSala;
 	private JMenu mnConsulta;
-	private JMenuItem mntmCliente_1;
-	private JMenuItem mntmSala_1;
+	private JMenuItem mntmClienteConsulta;
+	private JMenuItem mntmSalaConsulta;
 	private JMenuItem mntmEmprestimo;
 
 	/**
@@ -38,12 +40,6 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	public FramePrincipal() {
 		setTitle("Chaveiro do IFMA");
 		setBounds(100, 100, 450, 300);
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setSize(400, 300);
-		this.setVisible(true);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -54,17 +50,17 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		mnCadastro = new JMenu("Cadastro");
 		menuBar.add(mnCadastro);
 
-		btnEmprestimo = new JButton("Empréstimo");
+		btnEmprestimo = new JButton("Empr\u00E9stimo");
 		btnEmprestimo.addActionListener(this);
 		
 		mnConsulta = new JMenu("Consulta");
 		menuBar.add(mnConsulta);
 		
-		mntmCliente_1 = new JMenuItem("Cliente");
-		mnConsulta.add(mntmCliente_1);
+		mntmClienteConsulta = new JMenuItem("Cliente");
+		mnConsulta.add(mntmClienteConsulta);
 		
-		mntmSala_1 = new JMenuItem("Sala");
-		mnConsulta.add(mntmSala_1);
+		mntmSalaConsulta = new JMenuItem("Sala");
+		mnConsulta.add(mntmSalaConsulta);
 		
 		mntmEmprestimo = new JMenuItem("Empr\u00E9stimo");
 		mnConsulta.add(mntmEmprestimo);
@@ -81,7 +77,17 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		mntmSala = new JMenuItem("Sala");
 		mntmSala.addActionListener(this);
 		mnCadastro.add(mntmSala);
-
+		
+		this.add(desktop);
+		
+//		Image icone = this.getToolkit().getImage(getClass().getResource("/imagens/keys - fundo.png"));
+//        this.setIconImage(icone);
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setSize(400, 300);
+		this.setVisible(true);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	@Override
@@ -89,6 +95,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 
 		if (e.getSource() == btnEmprestimo) {
 			
+			TelaEmprestimo.getInstance().exibir(desktop);
 		}
 
 		else if (e.getSource() == mntmCliente) {
@@ -124,6 +131,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					ClienteDAO.getInstance(); //FIXME mudar essa forma de inicializar o hibernate
 					new FramePrincipal();
 				} catch (Exception e) {
 					e.printStackTrace();

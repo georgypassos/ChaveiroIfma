@@ -14,7 +14,7 @@
 		      <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/chaveiro"/>
 		      <property name="hibernate.show_sql" value="false"/>
 		      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-		      <property name="hibernate.hbm2ddl.auto" value="create"/>
+		      <property name="hibernate.hbm2ddl.auto" value="update"/>
     	</properties>
 	</persistence-unit>
 </persistence>

@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import entidade.Sala;
 
 public class SalaDAO extends Dao<Sala> {
@@ -25,6 +27,13 @@ public class SalaDAO extends Dao<Sala> {
         this.update(sala);
     }
     
+    public List<Sala> consultar(){
+    	
+    	String sql = "FROM Sala s";
+    	
+    	return search(sql, null);
+    	
+    }
     
     public static void main(String[] args) {
         SalaDAO s = SalaDAO.getInstance();
@@ -32,7 +41,9 @@ public class SalaDAO extends Dao<Sala> {
         sala.setCodigo("sala8");
         sala.setStatus(true);
         s.inserir(sala);
-        s.mudarStatus(4);
+        
+        System.out.println("-->> "+s.consultar().get(0).getStatus());
+        
     }
     
 }

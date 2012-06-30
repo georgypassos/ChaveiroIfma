@@ -17,11 +17,22 @@ public class Utilidades {
 
 	// formata um "JInternalFrame"
 	public void formataJanela(javax.swing.JInternalFrame gui, String srcImagem) {
-		gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
+		try {
+			gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
+		} catch (Exception e) {
+			System.out.println("Erro ao colocar imagem na janela...");
+		}
 		java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		java.awt.Dimension frameSize = gui.getSize();
 		int x = (screenSize.width - frameSize.width) / 2;
-		gui.setLocation(x, 10);
+		gui.setLocation(x, 40);
+	}
+	
+	public void configuraTabela(String... columns){
+		
+		
+		
+		
 	}
 
 	public int getYesNoOption(String msg) {
