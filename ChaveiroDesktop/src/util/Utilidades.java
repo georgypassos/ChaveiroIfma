@@ -5,63 +5,89 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 
 public class Utilidades {
 
 	private static final Utilidades utilidades = new Utilidades();
 
-	private Utilidades() { }
+	private Utilidades() {
+	}
 
 	public static Utilidades getInstance() {
 
 		return utilidades;
 	}
-	
+
 	public ImageIcon imgBtSalaAberta = new ImageIcon(getClass().getResource("/imagens/lock-open.png"));
 	public ImageIcon imgBtSalaFechada = new ImageIcon(getClass().getResource("/imagens/lock-close.png"));
 
+	public Object getValueFromCombo(javax.swing.JComboBox combo) {
+		javax.swing.ComboBoxModel model = combo.getModel();
+
+		Object value;
+		if (model instanceof MyModelComboBox) {
+			MyModelComboBox myModelComboBox = (MyModelComboBox) model;
+			value = myModelComboBox.getSelectedKey();
+		} else {
+			value = combo.getSelectedItem();
+		}
+
+		return value;
+	}
+	
+	public MaskFormatter mascara(String msk) {
+        MaskFormatter form = null;
+
+        try {
+            form = new MaskFormatter(msk);
+        } catch (java.text.ParseException exc) {
+        }
+
+        return form;
+    }
+
 	// formata um "JInternalFrame"
 	public void formataJanela(javax.swing.JInternalFrame gui, String srcImagem) {
-		try {
-			gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
-		} catch (Exception e) {
-			System.out.println("Erro ao colocar imagem na janela...");
-		}
+//		try {
+//			gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
+//		} catch (Exception e) {
+//			System.out.println("Erro ao colocar imagem na janela...");
+//		}
+		gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
 		java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		java.awt.Dimension frameSize = gui.getSize();
 		int x = (screenSize.width - frameSize.width) / 2;
 		gui.setLocation(x, 40);
-	}
-	
-	public void configuraTabela(String... columns){
 		
-		
+		gui.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 	}
-	
+
 	public Date getData(String data, String inType, String outType) {
 
-        try {
-            SimpleDateFormat inFmt = new SimpleDateFormat(inType);
-            SimpleDateFormat outFmt = new SimpleDateFormat(outType);
+		try {
+			SimpleDateFormat inFmt = new SimpleDateFormat(inType);
+			SimpleDateFormat outFmt = new SimpleDateFormat(outType);
 
-            return outFmt.parse(outFmt.format(inFmt.parse(data)));
+			return outFmt.parse(outFmt.format(inFmt.parse(data)));
 
-        } catch (ParseException ex) {
-        }
+		} catch (ParseException ex) {
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public String getData(Date data, String type) {
+	public String getData(Date data, String type) {
 
-        SimpleDateFormat fmt = new SimpleDateFormat(type);
+		SimpleDateFormat fmt = new SimpleDateFormat(type);
 
-        return fmt.format(data);
-    }
-	
-	public String getHtml(String msg){
-		
+		return fmt.format(data);
+	}
+
+	public String getHtml(String msg) {
+
 		return "<html>" + msg + "</html>";
 	}
 
@@ -73,14 +99,14 @@ public class Utilidades {
 	}
 
 	public void msgInformation(String msg) {
-		JOptionPane.showMessageDialog(null, msg, "AVISO", JOptionPane.INFORMATION_MESSAGE,
-				new ImageIcon(getClass().getResource("/imagens/imginfo.png")));
+		JOptionPane.showMessageDialog(null, msg, "AVISO", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass()
+				.getResource("/imagens/imginfo.png")));
 
 	}
 
 	public void msgWarning(String msg) {
-		JOptionPane.showMessageDialog(null, msg, "ATENÇÃO", JOptionPane.WARNING_MESSAGE,
-				new ImageIcon(getClass().getResource("/imagens/imgatencao.png")));
+		JOptionPane.showMessageDialog(null, msg, "ATENÇÃO", JOptionPane.WARNING_MESSAGE, new ImageIcon(getClass()
+				.getResource("/imagens/imgatencao.png")));
 	}
 
 	public void msgError(String msg) {

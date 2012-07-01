@@ -15,4 +15,12 @@ public class EmprestimoDAO extends Dao<Emprestimo> {
 		return emprestimoDAO;
 	}
 	
+	public void inserir(Emprestimo e){
+		
+		insert(e);
+		
+	}
+	
+	
+	
 }

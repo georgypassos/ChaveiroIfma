@@ -1,6 +1,6 @@
 package telas;
 
-import java.awt.EventQueue;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,29 +10,28 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
-import dao.ClienteDAO;
+import util.Utilidades;
 
 public class FramePrincipal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	private Utilidades utilidades = Utilidades.getInstance();
+	
 	/**
 	 * @wbp.nonvisual location=80,339
 	 */
 	protected final JDesktopPane desktop = new JDesktopPane();
 
-	private JMenu mnCadastro;
+	private JMenu mnGerencia;
 	private JButton btnEmprestimo;
 	private JMenu mnSistema;
 	private JMenuItem mntmSair;
 	private JMenuItem mntmCliente;
 	private JMenuItem mntmSala;
-	private JMenu mnConsulta;
-	private JMenuItem mntmClienteConsulta;
-	private JMenuItem mntmSalaConsulta;
-	private JMenuItem mntmEmprestimo;
 
 	/**
 	 * Create the frame.
@@ -47,42 +46,35 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		mnSistema = new JMenu("Sistema");
 		menuBar.add(mnSistema);
 
-		mnCadastro = new JMenu("Cadastro");
-		menuBar.add(mnCadastro);
+		mnGerencia = new JMenu("Gerenciar");
+		menuBar.add(mnGerencia);
 
-		btnEmprestimo = new JButton("Empr\u00E9stimo");
+		btnEmprestimo = new JButton("Empr\u00E9stimo de Chaves");
+		btnEmprestimo.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/chaves.png")));
 		btnEmprestimo.addActionListener(this);
-		
-		mnConsulta = new JMenu("Consulta");
-		menuBar.add(mnConsulta);
-		
-		mntmClienteConsulta = new JMenuItem("Cliente");
-		mnConsulta.add(mntmClienteConsulta);
-		
-		mntmSalaConsulta = new JMenuItem("Sala");
-		mnConsulta.add(mntmSalaConsulta);
-		
-		mntmEmprestimo = new JMenuItem("Empr\u00E9stimo");
-		mnConsulta.add(mntmEmprestimo);
 		menuBar.add(btnEmprestimo);
 
 		mntmSair = new JMenuItem("Sair");
+		mntmSair.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/signout.png")));
 		mntmSair.addActionListener(this);
 		mnSistema.add(mntmSair);
 
-		mntmCliente = new JMenuItem("Cliente");
+		mntmCliente = new JMenuItem("Clientes");
+		mntmCliente.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/usuarios.png")));
 		mntmCliente.addActionListener(this);
-		mnCadastro.add(mntmCliente);
+		mnGerencia.add(mntmCliente);
 
-		mntmSala = new JMenuItem("Sala");
+		mntmSala = new JMenuItem("Salas");
+		mntmSala.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/sala.png")));
 		mntmSala.addActionListener(this);
-		mnCadastro.add(mntmSala);
+		mnGerencia.add(mntmSala);
 		
-		this.add(desktop);
+		getContentPane().add(desktop);
 		
 //		Image icone = this.getToolkit().getImage(getClass().getResource("/imagens/keys - fundo.png"));
 //        this.setIconImage(icone);
 		
+		desktop.setBackground(Color.gray);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setSize(400, 300);
@@ -94,50 +86,27 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnEmprestimo) {
-			
 			TelaEmprestimo.getInstance().exibir(desktop);
 		}
 
 		else if (e.getSource() == mntmCliente) {
-			
+			TelaGerenciaCliente.getInstance().exibir(desktop);
 		}
 
 		else if (e.getSource() == mntmSala) {
-			
+			TelaGerenciaSala.getInstance().exibir(desktop);
 		}
 
 		else if (e.getSource() == mntmSair) {
-			System.exit(0);
+			
+			int opcao = utilidades.getYesNoOption("Deseja realmente fechar o sistema?");
+			
+			if(opcao == JOptionPane.YES_OPTION){
+				System.exit(0);
+			}
+
 		}
 
-	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("Erro ao inicializar Look and Feel ...");
-		}
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClienteDAO.getInstance(); //FIXME mudar essa forma de inicializar o hibernate
-					new FramePrincipal();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 }

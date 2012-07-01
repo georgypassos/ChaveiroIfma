@@ -21,9 +21,9 @@ public class SalaDAO extends Dao<Sala> {
         System.out.println("Sala salva com sucesso!");
     }
             
-    public void mudarStatus(int id){
+    public void mudarStatus(int id, int status){
         Sala sala = (Sala) this.get(id);
-        sala.setStatus(!sala.getStatus());
+        sala.setStatus(status);
         this.update(sala);
     }
     
@@ -39,7 +39,7 @@ public class SalaDAO extends Dao<Sala> {
         SalaDAO s = SalaDAO.getInstance();
         Sala sala = new Sala();
         sala.setCodigo("sala8");
-        sala.setStatus(true);
+        sala.setStatus(Sala.STATUS_ABERTA);
         s.inserir(sala);
         
         System.out.println("-->> "+s.consultar().get(0).getStatus());

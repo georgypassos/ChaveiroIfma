@@ -18,7 +18,7 @@ public class Cliente implements Serializable {
 	@Column(length=50)
 	private String nome;
 	
-	@Column(length=11)
+	@Column(length=14)
 	private String cpf;
 	
 	private String senha; 
@@ -36,10 +36,12 @@ public class Cliente implements Serializable {
     private List<Emprestimo> listEmprestimo;
 	
 	//não sei quais os perfis ao certo, alterem aqui...
-	private static final int PERFIL_USUARIO = 0;
-	private static final int PERFIL_ADMINISTRADOR = 1;
-	private static final int PERFIL_CLIENTE = 2;
+	public static final int PERFIL_USUARIO = 0;
+	public static final int PERFIL_ADMINISTRADOR = 1;
+	public static final int PERFIL_CLIENTE = 2;
 	//...
+	
+	public static final int TAMANHO_SENHA = 6;
 
 	public Cliente() {
 		super();

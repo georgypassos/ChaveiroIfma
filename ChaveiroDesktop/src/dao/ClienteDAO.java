@@ -25,6 +25,23 @@ public class ClienteDAO extends Dao<Cliente> {
         System.out.println("Cliente salvo com sucesso!");
 	}
 	
+	public Cliente getClienteByLogin(Cliente cliente){
+		
+		String sql = "FROM Cliente c WHERE c.cpf = :p0 AND c.senha = :p1";
+		
+		List<Cliente> list = search(sql, cliente.getCpf(), cliente.getSenha());
+		
+		if(list.size()>0)
+			return list.get(0);
+		else
+			return null;
+	}
+	
+	public Cliente getCliente(int id){
+		
+		return get(id);
+	}
+	
 	//método main só para criar o banco
 	public static void main(String[] args) {
 		ClienteDAO c = ClienteDAO.getInstance();
