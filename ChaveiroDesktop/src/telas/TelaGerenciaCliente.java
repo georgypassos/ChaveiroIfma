@@ -51,7 +51,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		painelCadastro.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(painelCadastro);
 		
-		tfNomeCliente = new JTextField(new MaxLengthDocument(Cliente.TAMANHO_SENHA), "", 10);
+		tfNomeCliente = new JTextField(new MaxLengthDocument(Cliente.TAMANHO_NOME), "", 10);
 		tfNomeCliente.setBounds(137, 11, 157, 28);
 		tfNomeCliente.setColumns(10);
 		
@@ -194,7 +194,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	
 	private void cadastrar(){
 		try{
-			cliente.setCpf(tfCPFCliente.getText());
+			cliente.setCpf(tfCPFCliente.getText()); //FIXME validar CPF aqui
 			cliente.setEmail(tfEmailCliente.getText());
 			cliente.setTelefone(tfFoneCliente.getText());
 			cliente.setNome(tfNomeCliente.getText());

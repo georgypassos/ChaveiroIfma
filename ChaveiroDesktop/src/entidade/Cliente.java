@@ -1,10 +1,14 @@
 package entidade;
 
 import java.io.Serializable;
-import java.lang.Integer;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente implements Serializable {
@@ -42,6 +46,7 @@ public class Cliente implements Serializable {
 	//...
 	
 	public static final int TAMANHO_SENHA = 6;
+	public static final int TAMANHO_NOME = 15;
 
 	public Cliente() {
 		super();
@@ -56,7 +61,7 @@ public class Cliente implements Serializable {
 	}
 
 	public String getNome() {
-		return nome;
+		return nome.toUpperCase();
 	}
 
 	public void setNome(String nome) {

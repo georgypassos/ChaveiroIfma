@@ -31,8 +31,6 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		super("Empréstimo de chaves");
 		
 		painelEmprestimo = new JPanel();
-		painelEmprestimo.setLayout(new GridLayout(3, 4, 2, 2));
-		this.setContentPane(painelEmprestimo);
 		
 		this.setBounds(100, 100, 457, 444);
 		utilidades.formataJanela(this, "/imagens/imgchave.png");
@@ -53,7 +51,22 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 	//FIXME fazer esse método mais variável
 	public void carregarSalas(){
 		
+		atualizaPainel();
+		
 		listSala = salaDAO.consultar();
+		
+		
+//		for(Sala s : listSala){
+//			
+//			System.out.println(s.getCodigo() + " : " + s.getStatusStr());
+//			
+//			try {
+//				
+//				System.out.println("   -->> " + s.getUltimoEmprestimo().getDataRetirada());
+//				
+//			} catch (Exception e) { }
+//			
+//		}
 		
 		if(listSala != null && listSala.size() > 0){
 			
@@ -70,12 +83,9 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 				
 				String texto = s.getCodigo();
 				
-				
-				
 				try {
-					texto += "<br><br><b>Cliente:</b> "+s.getUltimoCliente().getNome()+
+					texto += "<br><br><b>"+s.getUltimoCliente().getNome()+"</b>"+
 							 "<br><b>Retirada:</b> "+utilidades.getData(s.getUltimoEmprestimo().getDataRetirada(), "dd/MM HH:mm");
-					
 					texto = utilidades.getHtml(texto);
 				} catch (Exception e) { }
 				
@@ -103,25 +113,35 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		}
 		
 	}
+	
+	private void atualizaPainel(){
+		painelEmprestimo = new JPanel();
+		painelEmprestimo.setLayout(new GridLayout(3, 4, 2, 2));
+		this.setContentPane(painelEmprestimo);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		JButton b = (JButton) e.getSource();
 		
+		//pega o NAME do botao que tem o ID da sala
 		int idSala = Integer.parseInt(b.getName());
-		
 		Sala s = getSala(idSala);
 		
-		if(s.getUltimoEmprestimo() == null){
+		if(s.getStatus() == Sala.STATUS_FECHADA){
 			
-			new DialogEmprestimo(s);
+			utilidades.centralizaJanela(new DialogEmprestimo(s));
 			carregarSalas();
 		}
-		else{
+		else if(s.getStatus() == Sala.STATUS_ABERTA){
 			
-//			new DialogDevolucao(s);
+//			TODO new DialogDevolucao(s);
 			carregarSalas();
+		}
+		else if(s.getStatus() == Sala.STATUS_INDISPONIVEL){
+			
+			utilidades.msgWarning("Sala indisponível no momento!");
 		}
 		
 		

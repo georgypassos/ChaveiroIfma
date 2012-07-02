@@ -1,9 +1,11 @@
 package telas;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
@@ -44,18 +46,24 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 	 */
 	public DialogEmprestimo(Sala sala) {
 		this.sala = sala;
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogEmprestimo.class.getResource("/imagens/pnemprestimo.png")));
+		setTitle("Novo Empr\u00E9stimo");
+		
 		setBounds(100, 100, 325, 196);
-
+		
 		this.setContentPane(painelEmprestimo);
 		painelEmprestimo.setLayout(null);
 		
 		btnOk = new JButton("OK");
-		btnOk.setBounds(41, 112, 89, 30);
+		btnOk.setIcon(new ImageIcon(DialogEmprestimo.class.getResource("/imagens/btok.png")));
+		btnOk.setBounds(41, 112, 98, 30);
 		btnOk.addActionListener(this);
 		painelEmprestimo.add(btnOk);
 		
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(174, 112, 89, 30);
+		btnCancelar.setIcon(new ImageIcon(DialogEmprestimo.class.getResource("/imagens/btcancel.png")));
+		btnCancelar.setBounds(174, 112, 98, 30);
 		btnCancelar.addActionListener(this);
 		painelEmprestimo.add(btnCancelar);
 		
@@ -78,7 +86,6 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 		painelEmprestimo.add(tfCpf);
 		
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		this.setModal(true);
 		this.setVisible(true);
 	}
 

@@ -11,7 +11,7 @@ import javax.persistence.Query;
 public abstract class Dao<T> {
 
 	private static EntityManagerFactory emf;
-	private static EntityManager em;
+	private EntityManager em;
 	private static final String UNIT_NAME = "ChaveiroPU";
 
 	private Class classe;
@@ -20,42 +20,61 @@ public abstract class Dao<T> {
 
 		this.classe = classe;
 
-		if (em == null) {
+		if (emf == null) {
 			emf = Persistence.createEntityManagerFactory(UNIT_NAME);
-			em = emf.createEntityManager();
 		}
 
 	}
 
 	protected void insert(T entidade) {
+		em = emf.createEntityManager();
+		
 		em.getTransaction().begin();
 		em.persist(entidade);
 		em.getTransaction().commit();
+		
+//		em.close();
 	}
 
 	public void update(T entidade) {
+		em = emf.createEntityManager();
+		
 		em.getTransaction().begin();
 		em.merge(entidade);
 		em.getTransaction().commit();
+		
+//		em.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public T get(int id) {
-		return (T) em.find(classe, id);
+		em = emf.createEntityManager();
+		
+		Object object = em.find(classe, id);
+		
+//		em.close();
+		
+		return (T) object;
 	}
 
 	public void remove(int id) {
+		em = emf.createEntityManager();
+		
 		T entidade = get(id);
 		if (entidade != null) {
 			em.getTransaction().begin();
 			em.remove(entidade);
 			em.getTransaction().commit();
 		}
+		
+//		em.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<T> search(String sql, Object... parameters) {
 
+		em = emf.createEntityManager();
+		
 		Query q = em.createQuery(sql);
 
 		int i = 0;
@@ -67,13 +86,12 @@ public abstract class Dao<T> {
 				i++;
 			}
 		}
+		
+		List<T> list = q.getResultList();
+		
+//		em.close();
 
-		return q.getResultList();
-	}
-
-	public void close() {
-		em.close();
-		emf.close();
+		return list;
 	}
 
 }

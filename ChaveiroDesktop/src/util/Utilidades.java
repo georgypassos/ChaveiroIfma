@@ -51,18 +51,21 @@ public class Utilidades {
 
 	// formata um "JInternalFrame"
 	public void formataJanela(javax.swing.JInternalFrame gui, String srcImagem) {
-//		try {
-//			gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
-//		} catch (Exception e) {
-//			System.out.println("Erro ao colocar imagem na janela...");
-//		}
-		gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
-		java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		java.awt.Dimension frameSize = gui.getSize();
-		int x = (screenSize.width - frameSize.width) / 2;
-		gui.setLocation(x, 40);
+		try {
+			gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
+		} catch (Exception e) {
+			System.out.println("Erro ao colocar imagem na janela...");
+		}
+		centralizaJanela(gui);
 		
 		gui.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+	}
+	
+	public void centralizaJanela(java.awt.Component component){
+		java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		java.awt.Dimension frameSize = component.getSize();
+		int x = (screenSize.width - frameSize.width) / 2;
+		component.setLocation(x, 40);
 	}
 
 	public Date getData(String data, String inType, String outType) {

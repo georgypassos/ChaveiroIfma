@@ -31,7 +31,7 @@ public class Emprestimo implements Serializable {
     @JoinColumn(name = "cliente")
     private Cliente cliente;
 
-	@ManyToOne(fetch= FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sala")
     private Sala sala;
 
