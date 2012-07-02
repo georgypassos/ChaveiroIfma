@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import util.ConstantesComboBox;
 import util.MaxLengthDocument;
-import dao.ClienteDAO;
+import controles.ClienteControle;
 import entidade.Cliente;
 
 
@@ -36,10 +36,11 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	
 	private JButton btnNovo, btnSalvar, btnCancelar;
 	
-	private ClienteDAO clientedao; 
-	private Cliente cliente;
+	private ClienteControle clienteControle = ClienteControle.getInstance(this); 
 	private JPasswordField pfSenha;
 	private JPasswordField pfRepeteSenha;
+	
+	private Cliente cliente = new Cliente();
 	
 	/**
 	 * Create the frame.
@@ -143,9 +144,6 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		lblSenhasDiferentes.setBounds(137, 250, 157, 22);
 		painelCadastro.add(lblSenhasDiferentes);
 		
-		this.clientedao = ClienteDAO.getInstance();
-		this.cliente = new Cliente();
-		
 		this.setBounds(100, 100, 401, 417);
 		utilidades.formataJanela(this, "/imagens/usuarios.png");
 		this.setVisible(true);
@@ -164,7 +162,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == btnSalvar){
-			cadastrar();
+			clienteControle.inserir();
 		}
 		
 		else if(e.getSource() == btnCancelar){
@@ -192,23 +190,71 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		}
 	}
 	
-	private void cadastrar(){
-		try{
-			cliente.setCpf(tfCPFCliente.getText()); //FIXME validar CPF aqui
-			cliente.setEmail(tfEmailCliente.getText());
-			cliente.setTelefone(tfFoneCliente.getText());
-			cliente.setNome(tfNomeCliente.getText());
-			cliente.setPerfil((Integer) utilidades.getValueFromCombo(cbPerfis));
-			clientedao.inserir(cliente);
-			
-			utilidades.msgInformation("Cadastrado com sucesso!");
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-	
 	private void cancelar(){
-		limparCampos();
 		this.dispose();
+	}
+
+	public JTextField getTfNomeCliente() {
+		return tfNomeCliente;
+	}
+
+	public void setTfNomeCliente(JTextField tfNomeCliente) {
+		this.tfNomeCliente = tfNomeCliente;
+	}
+
+	public JTextField getTfEmailCliente() {
+		return tfEmailCliente;
+	}
+
+	public void setTfEmailCliente(JTextField tfEmailCliente) {
+		this.tfEmailCliente = tfEmailCliente;
+	}
+
+	public JTextField getTfFoneCliente() {
+		return tfFoneCliente;
+	}
+
+	public void setTfFoneCliente(JTextField tfFoneCliente) {
+		this.tfFoneCliente = tfFoneCliente;
+	}
+
+	public JFormattedTextField getTfCPFCliente() {
+		return tfCPFCliente;
+	}
+
+	public void setTfCPFCliente(JFormattedTextField tfCPFCliente) {
+		this.tfCPFCliente = tfCPFCliente;
+	}
+
+	public JComboBox getCbPerfis() {
+		return cbPerfis;
+	}
+
+	public void setCbPerfis(JComboBox cbPerfis) {
+		this.cbPerfis = cbPerfis;
+	}
+
+	public JPasswordField getPfSenha() {
+		return pfSenha;
+	}
+
+	public void setPfSenha(JPasswordField pfSenha) {
+		this.pfSenha = pfSenha;
+	}
+
+	public JPasswordField getPfRepeteSenha() {
+		return pfRepeteSenha;
+	}
+
+	public void setPfRepeteSenha(JPasswordField pfRepeteSenha) {
+		this.pfRepeteSenha = pfRepeteSenha;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }

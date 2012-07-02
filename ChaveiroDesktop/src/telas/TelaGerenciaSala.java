@@ -135,11 +135,9 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 	private void cadastrar(){
 		try{
 			sala.setCodigo(tfcodigoSala.getText());
-//			if(this.cbManutencao.isSelected()){
-//				sala.setStatus(false);
-//			}else{
-//				sala.setStatus(true);
-//			}
+			if(this.cbManutencao.isSelected()){
+				sala.setStatus(Sala.STATUS_INDISPONIVEL);
+			}
 			saladao.inserir(sala);
 			JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
 		}catch (Exception e) {

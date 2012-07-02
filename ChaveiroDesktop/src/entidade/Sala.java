@@ -31,6 +31,7 @@ public class Sala implements Serializable {
 
 	public Sala() {
 		super();
+		this.status = STATUS_FECHADA;
 	}
 
 	public Integer getIdsala() {

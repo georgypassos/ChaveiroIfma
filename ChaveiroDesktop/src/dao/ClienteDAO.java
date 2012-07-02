@@ -42,18 +42,4 @@ public class ClienteDAO extends Dao<Cliente> {
 		return get(id);
 	}
 	
-	//método main só para criar o banco
-	public static void main(String[] args) {
-		ClienteDAO c = ClienteDAO.getInstance();
-		
-		String sql = "FROM Cliente c WHERE c.nome like :p0 AND c.senha = :p1";
-		
-		List<Cliente> list = c.search(sql, "%geo%", "georgysenhaa");
-		
-		for (Cliente cliente : list) {
-			System.out.println(cliente.getIdcliente() + " - " + cliente.getNome());
-		}
-		
-	}
-	
 }
