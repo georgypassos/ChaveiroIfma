@@ -3,119 +3,92 @@ package telas;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import util.MaxLengthDocument;
 import util.Utilidades;
-import dao.ClienteDAO;
 import dao.EmprestimoDAO;
 import dao.SalaDAO;
 import entidade.Cliente;
 import entidade.Emprestimo;
 import entidade.Sala;
 
-public class DialogEmprestimo extends JDialog implements ActionListener{
+public class DialogDevolucao extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	
 	private Utilidades utilidades = Utilidades.getInstance();
 	
-	private final JPanel painelEmprestimo = new JPanel();
+	private final JPanel painelDevolucao = new JPanel();
 	private JPasswordField pfSenha;
-	
-	private JFormattedTextField tfCpf;
-	
+	private JTextField tfNomeCliente;
 	private JButton btnOk, btnCancelar;
 
-	private ClienteDAO clienteDao = ClienteDAO.getInstance();
 	private EmprestimoDAO emprestimoDao = EmprestimoDAO.getInstance();
 	private SalaDAO salaDao = SalaDAO.getInstance();
-	private Sala sala;
+	private Emprestimo emprestimo;
 	
 	/**
 	 * Create the dialog.
 	 */
-	public DialogEmprestimo(Sala sala) {
-		this.sala = sala;
+	public DialogDevolucao(Emprestimo emprestimo) {
+		this.emprestimo = emprestimo;
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogEmprestimo.class.getResource("/imagens/pnemprestimo.png")));
-		setTitle("Novo Empr\u00E9stimo");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogDevolucao.class.getResource("/imagens/pndevolucao.png")));
+		setTitle("Devolu\u00E7\u00E3o");
 		
 		setBounds(100, 100, 325, 196);
 		
-		this.setContentPane(painelEmprestimo);
-		painelEmprestimo.setLayout(null);
+		this.setContentPane(painelDevolucao);
+		painelDevolucao.setLayout(null);
 		
 		btnOk = new JButton("OK");
 		btnOk.setIcon(new ImageIcon(DialogEmprestimo.class.getResource("/imagens/btok.png")));
 		btnOk.setBounds(41, 112, 98, 30);
 		btnOk.addActionListener(this);
-		painelEmprestimo.add(btnOk);
+		painelDevolucao.add(btnOk);
 		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setIcon(new ImageIcon(DialogEmprestimo.class.getResource("/imagens/btcancel.png")));
 		btnCancelar.setBounds(163, 112, 110, 30);
 		btnCancelar.addActionListener(this);
-		painelEmprestimo.add(btnCancelar);
+		painelDevolucao.add(btnCancelar);
 		
-		JLabel lblCpf = new JLabel("CPF:");
+		JLabel lblCpf = new JLabel("Nome:");
 		lblCpf.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCpf.setBounds(10, 18, 89, 14);
-		painelEmprestimo.add(lblCpf);
+		painelDevolucao.add(lblCpf);
 		
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSenha.setBounds(10, 60, 89, 14);
-		painelEmprestimo.add(lblSenha);
+		painelDevolucao.add(lblSenha);
 		
 		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_SENHA), "", 10);
 		pfSenha.setBounds(109, 53, 139, 28);
-		painelEmprestimo.add(pfSenha);
+		painelDevolucao.add(pfSenha);
 		
-		tfCpf = new JFormattedTextField(utilidades.mascara("###.###.###-##"));
-		tfCpf.setBounds(109, 11, 139, 28);
-		tfCpf.addKeyListener(new OuvinteCpf());
-		painelEmprestimo.add(tfCpf);
+		tfNomeCliente = new JTextField();
+		tfNomeCliente.setEditable(false);
+		tfNomeCliente.setBounds(109, 11, 139, 28);
+		painelDevolucao.add(tfNomeCliente);
+		
+		//seta o nome do cliente
+		tfNomeCliente.setText(emprestimo.getCliente().getNome());
 		
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.getRootPane().setDefaultButton(btnOk);
 		this.setModal(true);
 		this.setVisible(true);
-	}
-	
-	private class OuvinteCpf implements KeyListener{
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			if(tfCpf.getText().trim().length() == 14){
-				
-				if(utilidades.validacpf(tfCpf.getText())){
-					pfSenha.requestFocus();
-				}
-				else{
-					utilidades.msgError("CPF invalido");
-				}
-				
-			}
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) { }
-
-		@Override
-		public void keyReleased(KeyEvent e) { }
-		
 	}
 
 	@Override
@@ -123,25 +96,22 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 		
 		if(e.getSource() == btnOk){
 			
-			Cliente cliente = getCliente();
-			cliente = clienteDao.getClienteByLogin(cliente);
+			String senha = new String(pfSenha.getPassword());
 			
-			if(cliente != null){
+			if(senha.equals(emprestimo.getCliente().getSenha())){
+
+				emprestimo.setDataEntrega(new Date());
 				
-				Emprestimo emprestimo = new Emprestimo();
+				emprestimoDao.atualizar(emprestimo);
 				
-				emprestimo.setSala(sala);
-				emprestimo.setCliente(cliente);
-				emprestimo.setDataRetirada(new Date());
-				
-				salaDao.mudarStatus(sala.getIdsala(), Sala.STATUS_ABERTA);
-				emprestimoDao.inserir(emprestimo);
+				salaDao.mudarStatus(emprestimo.getSala().getIdsala(), Sala.STATUS_FECHADA);
 				
 				this.dispose();
+				
 			}
 			else{
-				
-				utilidades.msgError("Login inválido");
+
+				utilidades.msgError("Senha incorreta!");
 			}
 			
 		}
@@ -151,16 +121,6 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 			this.dispose();
 		}
 		
-	}
-	
-	private Cliente getCliente(){
-		
-		Cliente c = new Cliente();
-		
-		c.setCpf(tfCpf.getText());
-		c.setSenha(new String(pfSenha.getPassword()));
-		
-		return c;
 	}
 	
 }

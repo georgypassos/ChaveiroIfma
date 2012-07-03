@@ -18,7 +18,7 @@ public abstract class MyInternalFrame extends JInternalFrame{
     private boolean natela = false;
     
     protected MyInternalFrame(String title){
-    	super(title, true, true, false, true);
+    	super(title, false, true, false, true);
     	
     	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
 

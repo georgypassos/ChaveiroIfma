@@ -1,6 +1,7 @@
 package telas;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -22,7 +23,6 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 	private JPanel painelEmprestimo;
 	private SalaDAO salaDAO = SalaDAO.getInstance();
 	private List<Sala> listSala;
-//	private List<Sala> listSala = new ArrayList<Sala>();
 	
 	/**
 	 * Create the frame.
@@ -32,8 +32,10 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		
 		painelEmprestimo = new JPanel();
 		
-		this.setBounds(100, 100, 457, 444);
+		this.setBounds(100, 100, 458, 444);
 		utilidades.formataJanela(this, "/imagens/imgchave.png");
+		
+		this.setMaximumSize(new Dimension(458, 600));
 		
 		carregarSalas();
 		this.setVisible(true);
@@ -54,19 +56,6 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		atualizaPainel();
 		
 		listSala = salaDAO.consultar();
-		
-		
-//		for(Sala s : listSala){
-//			
-//			System.out.println(s.getCodigo() + " : " + s.getStatusStr());
-//			
-//			try {
-//				
-//				System.out.println("   -->> " + s.getUltimoEmprestimo().getDataRetirada());
-//				
-//			} catch (Exception e) { }
-//			
-//		}
 		
 		if(listSala != null && listSala.size() > 0){
 			
@@ -115,6 +104,7 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 	}
 	
 	private void atualizaPainel(){
+		painelEmprestimo = null;
 		painelEmprestimo = new JPanel();
 		painelEmprestimo.setLayout(new GridLayout(3, 4, 2, 2));
 		this.setContentPane(painelEmprestimo);
@@ -131,12 +121,14 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		
 		if(s.getStatus() == Sala.STATUS_FECHADA){
 			
-			utilidades.centralizaJanela(new DialogEmprestimo(s));
+			new DialogEmprestimo(s);
+			
 			carregarSalas();
 		}
 		else if(s.getStatus() == Sala.STATUS_ABERTA){
 			
-//			TODO new DialogDevolucao(s);
+			new DialogDevolucao(s.getUltimoEmprestimo());
+			 
 			carregarSalas();
 		}
 		else if(s.getStatus() == Sala.STATUS_INDISPONIVEL){

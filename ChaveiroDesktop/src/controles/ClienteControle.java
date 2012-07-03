@@ -30,7 +30,7 @@ public class ClienteControle extends Controle{
 		
 		try {
 			
-			camposObrigatorios();
+			validarCampos();
 			
 			Cliente cliente = getCliente();
 			
@@ -46,38 +46,23 @@ public class ClienteControle extends Controle{
 		
 	}
 	
-	private Cliente getCliente() throws SistemaException {
+	private Cliente getCliente() {
 		
 		Cliente cliente = tela.getCliente();
 		
-		cliente.setCpf(tela.getTfCPFCliente().getText()); //FIXME validar CPF aqui
-		
-		//validando cpf
-		if(!utilidades.validacpf(cliente.getCpf())){
-			throw new SistemaException("CPF invalido!");
-		}
-		
-		String senha1 = new String(tela.getPfSenha().getPassword());
-		String senha2 = new String(tela.getPfRepeteSenha().getPassword());
-		
-		//validando se as senhas digitadas sao iguais
-		if(!senha1.equals(senha2)){
-			throw new SistemaException("As senhas nao sao iguais!");
-		}
-		cliente.setSenha(senha1);
-		
+		cliente.setCpf(tela.getTfCPFCliente().getText());
+		cliente.setSenha(new String(tela.getPfSenha().getPassword()));
 		cliente.setEmail(tela.getTfEmailCliente().getText());
 		cliente.setTelefone(tela.getTfFoneCliente().getText());
 		cliente.setNome(tela.getTfNomeCliente().getText());
-		
-		System.out.println("perfil selecionado: " + (Integer) utilidades.getValueFromCombo(tela.getCbPerfis()));
-		
 		cliente.setPerfil((Integer) utilidades.getValueFromCombo(tela.getCbPerfis())); //usar esse metodo para pegar valor da combo
 		
 		return cliente;
 	}
 	
-	private void camposObrigatorios() throws SistemaException {
+	private void validarCampos() throws SistemaException {
+
+		/** verficando campos obrigatorios */
 		
 		if(tela.getTfNomeCliente().getText().trim().equals(""))
 			throw new SistemaException("O nome do cliente e' obrigatorio");
@@ -88,10 +73,24 @@ public class ClienteControle extends Controle{
 		if(new String(tela.getPfSenha().getPassword()).trim().equals(""))
 			throw new SistemaException("O senha do cliente e' obrigatoria");
 		
-		if(new String(tela.getPfSenha().getPassword()).trim().equals(""))
+		if(new String(tela.getPfRepeteSenha().getPassword()).trim().equals(""))
 			throw new SistemaException("Repita a senha");
 		
 		//FIXME as senhas devem ter um numero minimo de caracteres tambem 
+		
+		
+		/** validando campos */
+		
+		//validando cpf
+		if(!utilidades.validacpf(tela.getTfCPFCliente().getText()))
+			throw new SistemaException("CPF invalido!");
+		
+		String senha1 = new String(tela.getPfSenha().getPassword());
+		String senha2 = new String(tela.getPfRepeteSenha().getPassword());
+		
+		//validando se as senhas digitadas sao iguais
+		if(!senha1.equals(senha2))
+			throw new SistemaException("As senhas nao sao iguais!");
 		
 	}
 	

@@ -21,6 +21,10 @@ public class EmprestimoDAO extends Dao<Emprestimo> {
 		
 	}
 	
-	
+	public void atualizar(Emprestimo e){
+		
+		update(e);
+		
+	}
 	
 }

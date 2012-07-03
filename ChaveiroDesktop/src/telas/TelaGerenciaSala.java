@@ -25,7 +25,6 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 	
 	private JPanel painelCadastro;
 	private JTextField tfcodigoSala;
-	private JLabel lblASalaEst;
 	private JCheckBox cbManutencao;
 	
 	JButton btnSalvar, btnCancelarSala;
@@ -45,18 +44,15 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 		setContentPane(painelCadastro);
 		
 		tfcodigoSala = new JTextField();
-		tfcodigoSala.setBounds(171, 54, 157, 20);
+		tfcodigoSala.setBounds(171, 54, 157, 28);
 		tfcodigoSala.setColumns(10);
 		
 		JLabel lbCodigoSala = new JLabel("C\u00F3digo da Sala:");
-		lbCodigoSala.setBounds(59, 57, 108, 15);
+		lbCodigoSala.setBounds(59, 61, 108, 15);
 		lbCodigoSala.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		lblASalaEst = new JLabel("A sala esta atualmente em manutenção?");
-		lblASalaEst.setBounds(59, 116, 331, 15);
-		
-		cbManutencao = new JCheckBox("");
-		cbManutencao.setBounds(59, 138, 129, 23);
+		cbManutencao = new JCheckBox("A sala est\u00E1 atualmente indispon\u00EDvel?");
+		cbManutencao.setBounds(77, 115, 281, 23);
 		cbManutencao.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		btnSalvar = new JButton("Salvar");
@@ -77,7 +73,6 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 		painelCadastro.setLayout(null);
 		painelCadastro.add(tfcodigoSala);
 		painelCadastro.add(lbCodigoSala);
-		painelCadastro.add(lblASalaEst);
 		painelCadastro.add(cbManutencao);
 		painelCadastro.add(btnSalvar);
 		painelCadastro.add(btnCancelarSala);
@@ -86,7 +81,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 		this.saladao = SalaDAO.getInstance();
 		this.sala = new Sala();
 		
-		this.setBounds(100, 100, 455, 304);
+		this.setBounds(100, 100, 447, 282);
 		utilidades.formataJanela(this, "/imagens/sala.png");
 		this.setVisible(true);
 	}

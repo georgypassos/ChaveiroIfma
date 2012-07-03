@@ -22,7 +22,6 @@ public class ClienteDAO extends Dao<Cliente> {
 		
 		insert(cliente);
         
-        System.out.println("Cliente salvo com sucesso!");
 	}
 	
 	public Cliente getClienteByLogin(Cliente cliente){
