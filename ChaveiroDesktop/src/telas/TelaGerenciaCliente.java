@@ -64,72 +64,72 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		tfFoneCliente.setBounds(137, 131, 157, 28);
 		tfFoneCliente.setColumns(10);
 		
-		JLabel lblNomeCliente = new JLabel("Nome:");
-		lblNomeCliente.setBounds(57, 18, 70, 15);
-		lblNomeCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-		
-		JLabel lblCPFCliente = new JLabel("CPF:");
-		lblCPFCliente.setBounds(57, 58, 70, 15);
-		lblCPFCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-		
-		JLabel lblEmailCliente = new JLabel("Email:");
-		lblEmailCliente.setBounds(57, 98, 70, 15);
-		lblEmailCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-		
-		JLabel lblFoneCliente = new JLabel("Telefone:");
-		lblFoneCliente.setBounds(57, 138, 70, 15);
-		lblFoneCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-		
-		JLabel lblPerfilCliente = new JLabel("Perfil:");
-		lblPerfilCliente.setBounds(57, 287, 70, 15);
-		lblPerfilCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-		
 		cbPerfis = new JComboBox();
-		cbPerfis.setBounds(137, 280, 157, 28);
+		cbPerfis.setBounds(137, 255, 157, 28);
 		
 		cbPerfis.setModel(ConstantesComboBox.modelPerfil);
 
 		btnNovo = new JButton("Novo");
-		btnNovo.setBounds(10, 350, 93, 30);
+		btnNovo.setBounds(10, 320, 93, 30);
 		btnNovo.setIcon(new ImageIcon(TelaGerenciaCliente.class.getResource("/imagens/btnew.png")));
 		btnNovo.addActionListener(this);
 		
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(121, 351, 117, 30);
+		btnSalvar.setBounds(121, 321, 117, 30);
 		btnSalvar.setIcon(new ImageIcon(TelaGerenciaCliente.class.getResource("/imagens/btsave.png")));
 		btnSalvar.addActionListener(this);
 		
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(256, 351, 117, 30);
+		btnCancelar.setBounds(256, 321, 117, 30);
 		btnCancelar.setIcon(new ImageIcon(TelaGerenciaCliente.class.getResource("/imagens/btcancel.png")));
 		btnCancelar.addActionListener(this);
 		
 		tfCPFCliente = new JFormattedTextField(utilidades.mascara("###.###.###-##"));
 		tfCPFCliente.setBounds(137, 51, 157, 28);
 		tfCPFCliente.setColumns(10);
+		painelCadastro.setLayout(null);
 		
-		JLabel lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(57, 178, 70, 14);
-		lblSenha.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLabel lblNomeCliente = new JLabel("Nome:");
+		lblNomeCliente.setBounds(57, 18, 70, 15);
+		lblNomeCliente.setHorizontalAlignment(SwingConstants.RIGHT);
+		painelCadastro.add(lblNomeCliente);
+		
+		JLabel lblCPFCliente = new JLabel("CPF:");
+		lblCPFCliente.setBounds(57, 58, 70, 15);
+		lblCPFCliente.setHorizontalAlignment(SwingConstants.RIGHT);
+		painelCadastro.add(lblCPFCliente);
+		
+		JLabel lblEmailCliente = new JLabel("Email:");
+		lblEmailCliente.setBounds(57, 98, 70, 15);
+		lblEmailCliente.setHorizontalAlignment(SwingConstants.RIGHT);
+		painelCadastro.add(lblEmailCliente);
+		
+		JLabel lblFoneCliente = new JLabel("Telefone:");
+		lblFoneCliente.setBounds(57, 138, 70, 15);
+		lblFoneCliente.setHorizontalAlignment(SwingConstants.RIGHT);
+		painelCadastro.add(lblFoneCliente);
 		
 		JLabel lblRepetirSenha = new JLabel("Repetir senha:");
 		lblRepetirSenha.setBounds(30, 218, 97, 14);
 		lblRepetirSenha.setHorizontalAlignment(SwingConstants.RIGHT);
-		painelCadastro.setLayout(null);
+		painelCadastro.add(lblRepetirSenha);
+		
+		JLabel lblPerfilCliente = new JLabel("Perfil:");
+		lblPerfilCliente.setBounds(57, 262, 70, 15);
+		lblPerfilCliente.setHorizontalAlignment(SwingConstants.RIGHT);
+		painelCadastro.add(lblPerfilCliente);
+		
+		JLabel lblSenha = new JLabel("Senha:");
+		lblSenha.setBounds(57, 178, 70, 14);
+		lblSenha.setHorizontalAlignment(SwingConstants.RIGHT);
+		painelCadastro.add(lblSenha);
 		painelCadastro.add(btnNovo);
 		painelCadastro.add(btnSalvar);
 		painelCadastro.add(btnCancelar);
-		painelCadastro.add(lblNomeCliente);
-		painelCadastro.add(lblCPFCliente);
-		painelCadastro.add(lblEmailCliente);
-		painelCadastro.add(lblFoneCliente);
 		painelCadastro.add(tfFoneCliente);
 		painelCadastro.add(tfCPFCliente);
 		painelCadastro.add(tfNomeCliente);
 		painelCadastro.add(tfEmailCliente);
-		painelCadastro.add(lblRepetirSenha);
-		painelCadastro.add(lblPerfilCliente);
-		painelCadastro.add(lblSenha);
 		painelCadastro.add(cbPerfis);
 		
 		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_SENHA), "", 10);
@@ -140,11 +140,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		pfRepeteSenha.setBounds(137, 211, 157, 28);
 		painelCadastro.add(pfRepeteSenha);
 		
-		JLabel lblSenhasDiferentes = new JLabel("");
-		lblSenhasDiferentes.setBounds(137, 250, 157, 22);
-		painelCadastro.add(lblSenhasDiferentes);
-		
-		this.setBounds(100, 100, 401, 417);
+		this.setBounds(100, 100, 401, 397);
 		utilidades.formataJanela(this, "/imagens/usuarios.png");
 		this.setVisible(true);
 	}
@@ -170,13 +166,13 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		}
 		
 		else if(e.getSource() == btnNovo){
+			cliente = new Cliente();
 			limparCampos();
 		}
 		
 	}
 
 	private void limparCampos(){
-		cliente = new Cliente();
 		for(Component c: painelCadastro.getComponents()){    
             if(c instanceof JTextField){    
                ((JTextField) c).setText(null);                   
@@ -198,63 +194,32 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		return tfNomeCliente;
 	}
 
-	public void setTfNomeCliente(JTextField tfNomeCliente) {
-		this.tfNomeCliente = tfNomeCliente;
-	}
-
 	public JTextField getTfEmailCliente() {
 		return tfEmailCliente;
-	}
-
-	public void setTfEmailCliente(JTextField tfEmailCliente) {
-		this.tfEmailCliente = tfEmailCliente;
 	}
 
 	public JTextField getTfFoneCliente() {
 		return tfFoneCliente;
 	}
 
-	public void setTfFoneCliente(JTextField tfFoneCliente) {
-		this.tfFoneCliente = tfFoneCliente;
-	}
-
 	public JFormattedTextField getTfCPFCliente() {
 		return tfCPFCliente;
-	}
-
-	public void setTfCPFCliente(JFormattedTextField tfCPFCliente) {
-		this.tfCPFCliente = tfCPFCliente;
 	}
 
 	public JComboBox getCbPerfis() {
 		return cbPerfis;
 	}
 
-	public void setCbPerfis(JComboBox cbPerfis) {
-		this.cbPerfis = cbPerfis;
-	}
-
 	public JPasswordField getPfSenha() {
 		return pfSenha;
-	}
-
-	public void setPfSenha(JPasswordField pfSenha) {
-		this.pfSenha = pfSenha;
 	}
 
 	public JPasswordField getPfRepeteSenha() {
 		return pfRepeteSenha;
 	}
 
-	public void setPfRepeteSenha(JPasswordField pfRepeteSenha) {
-		this.pfRepeteSenha = pfRepeteSenha;
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
 }

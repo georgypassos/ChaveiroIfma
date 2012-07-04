@@ -56,16 +56,16 @@ public class Utilidades {
 		} catch (Exception e) {
 			System.out.println("Erro ao colocar imagem na janela...");
 		}
-		centralizaJanela(gui);
+		centralizaJanela(gui, 40);
 
 		gui.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 	}
 
-	public void centralizaJanela(java.awt.Component component) {
+	public void centralizaJanela(java.awt.Component component, int y) {
 		java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		java.awt.Dimension frameSize = component.getSize();
 		int x = (screenSize.width - frameSize.width) / 2;
-		component.setLocation(x, 40);
+		component.setLocation(x, y);
 	}
 
 	public Date getData(String data, String inType, String outType) {

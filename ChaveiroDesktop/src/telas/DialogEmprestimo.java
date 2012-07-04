@@ -88,6 +88,8 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 		tfCpf.addKeyListener(new OuvinteCpf());
 		painelEmprestimo.add(tfCpf);
 		
+
+		utilidades.centralizaJanela(this, 60);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.getRootPane().setDefaultButton(btnOk);
 		this.setModal(true);
@@ -98,23 +100,24 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			if(tfCpf.getText().trim().length() == 14){
-				
-				if(utilidades.validacpf(tfCpf.getText())){
-					pfSenha.requestFocus();
-				}
-				else{
-					utilidades.msgError("CPF invalido");
-				}
-				
-			}
+			
 		}
 
 		@Override
-		public void keyPressed(KeyEvent e) { }
+		public void keyPressed(KeyEvent e) {
+			
+			
+		}
 
 		@Override
-		public void keyReleased(KeyEvent e) { }
+		public void keyReleased(KeyEvent e) {
+			
+			if(tfCpf.getText().trim().length() >= 14){
+				
+				pfSenha.requestFocus();
+				
+			}
+		}
 		
 	}
 
