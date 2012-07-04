@@ -69,6 +69,14 @@ public abstract class Dao<T> {
 		
 //		em.close();
 	}
+	
+	public void remove(T entidade){
+		em = emf.createEntityManager();
+		
+		em.getTransaction().begin();
+		em.remove(entidade);
+		em.getTransaction().commit();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<T> search(String sql, Object... parameters) {

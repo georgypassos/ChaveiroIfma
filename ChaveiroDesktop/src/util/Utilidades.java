@@ -23,6 +23,7 @@ public class Utilidades {
 
 	public ImageIcon imgBtSalaAberta = new ImageIcon(getClass().getResource("/imagens/lock-open.png"));
 	public ImageIcon imgBtSalaFechada = new ImageIcon(getClass().getResource("/imagens/lock-close.png"));
+//	public ImageIcon imgBtSalaIndisponivel = new ImageIcon(getClass().getResource("/imagens/lock-disable.png"));
 
 	public Object getValueFromCombo(javax.swing.JComboBox combo) {
 		javax.swing.ComboBoxModel model = combo.getModel();

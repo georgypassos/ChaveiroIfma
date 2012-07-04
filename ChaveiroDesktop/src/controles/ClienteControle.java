@@ -1,5 +1,7 @@
 package controles;
 
+import java.util.List;
+
 import telas.TelaGerenciaCliente;
 import dao.ClienteDAO;
 import entidade.Cliente;
@@ -39,10 +41,56 @@ public class ClienteControle extends Controle{
 			utilidades.msgInformation("Cliente cadastrado com sucesso!");
 			
 		} catch (SistemaException e) {
-			
 			utilidades.msgWarning(e.getMessage());
 		}
 		
+	}
+	
+	public void editar(){
+		
+		try {
+			
+			//FIXME primeiro pegar o cliente, depois validar os campos
+			Cliente cliente = getCliente();
+			
+			validarCampos();
+			
+			clienteDao.atualizar(cliente);
+			
+			utilidades.msgInformation("Cliente salvo com sucesso!");
+			
+		} catch (SistemaException e) {
+			utilidades.msgWarning(e.getMessage());
+		}
+		
+	}
+	
+	public void excluir(){
+		
+		try {
+			
+			Cliente cliente = (Cliente) tela.getModelTableConsulta().getKeySelected();
+			
+			clienteDao.excluir(cliente);
+			
+			utilidades.msgInformation("Cliente excluido com sucesso!");
+			
+		} catch (NullPointerException e) {
+			utilidades.msgError("Selecione um item para excluir");
+		}
+		
+	}
+	
+	public List<Cliente> consultaPorNome(String nome) throws SistemaException{
+		
+		List<Cliente> list = clienteDao.consultaPorNome(nome);
+		
+		if(list != null && list.size()>0){
+			return list;
+		}
+		else{
+			throw new SistemaException("Sem resultados!");
+		}
 		
 	}
 	
@@ -64,6 +112,8 @@ public class ClienteControle extends Controle{
 
 		/** verficando campos obrigatorios */
 		
+		System.out.println("nome do cliente: ->"+tela.getTfNomeCliente().getText().trim());
+		
 		if(tela.getTfNomeCliente().getText().trim().equals(""))
 			throw new SistemaException("O nome do cliente e' obrigatorio");
 		
@@ -81,16 +131,21 @@ public class ClienteControle extends Controle{
 		
 		/** validando campos */
 		
+		//FIXME validar o telefone (apenas se ele tiver sido digitado)
+		
 		//validando cpf
 		if(!utilidades.validacpf(tela.getTfCPFCliente().getText()))
-			throw new SistemaException("CPF invalido!");
+			throw new SistemaException("CPF invalido");
+		
+		if(clienteDao.existeCpf(tela.getTfCPFCliente().getText()))
+			throw new SistemaException("CPF ja cadastrado");
 		
 		String senha1 = new String(tela.getPfSenha().getPassword());
 		String senha2 = new String(tela.getPfRepeteSenha().getPassword());
 		
 		//validando se as senhas digitadas sao iguais
 		if(!senha1.equals(senha2))
-			throw new SistemaException("As senhas nao sao iguais!");
+			throw new SistemaException("As senhas nao sao iguais");
 		
 	}
 	

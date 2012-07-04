@@ -3,6 +3,9 @@ package telas;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,46 +14,105 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import util.ConstantesComboBox;
 import util.MaxLengthDocument;
+import util.MyModelTable;
 import controles.ClienteControle;
 import entidade.Cliente;
+import excecoes.SistemaException;
+import java.awt.Color;
 
 
 public class TelaGerenciaCliente extends MyInternalFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel painelCadastro;
+	private JPanel painelCadastro, painelConsulta;
+	private JTabbedPane painelTabbed;
+	
 	private JTextField tfNomeCliente;
 	private JTextField tfEmailCliente;
-	private JTextField tfFoneCliente;
+	private JFormattedTextField tfFoneCliente;
 	private JFormattedTextField tfCPFCliente;
 	
 	private JComboBox cbPerfis;
 	
-	private JButton btnNovo, btnSalvar, btnCancelar;
+	private JButton btnNovo, btnSalvar, btnCancelar, btnExcluir, btnEditar;
 	
 	private ClienteControle clienteControle = ClienteControle.getInstance(this); 
 	private JPasswordField pfSenha;
 	private JPasswordField pfRepeteSenha;
 	
 	private Cliente cliente = new Cliente();
+	private JScrollPane scrollConsulta;
+	
+	private MyModelTable modelTableConsulta;
+	private JTextField tfNomeConsulta;
+	private JLabel lblErroConsulta;
 	
 	/**
 	 * Create the frame.
 	 */
 	public TelaGerenciaCliente() {
 		super("Cadastro de Clientes");
+				
+		painelTabbed = new JTabbedPane();
+		setContentPane(painelTabbed);
 		
 		painelCadastro = new JPanel();
 		painelCadastro.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(painelCadastro);
+		painelTabbed.add("Cadastro", painelCadastro);
+		
+		painelConsulta = new JPanel();
+		painelConsulta.setBorder(new EmptyBorder(5, 5, 5, 5));
+		painelTabbed.add("Consulta", painelConsulta);
+		painelConsulta.setLayout(null);
+		
+		scrollConsulta = new JScrollPane();
+		scrollConsulta.setBounds(10, 85, 364, 220);
+		
+		JTable tabelaConsulta = new JTable();
+		tabelaConsulta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		modelTableConsulta = new MyModelTable("Nome", "Tipo de perfil");
+		modelTableConsulta.setTable(tabelaConsulta);
+		scrollConsulta.setViewportView(tabelaConsulta);
+		painelConsulta.add(scrollConsulta);
+		
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNome.setBounds(76, 28, 46, 14);
+		painelConsulta.add(lblNome);
+		
+		lblErroConsulta = new JLabel("");
+		lblErroConsulta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblErroConsulta.setForeground(Color.RED);
+		lblErroConsulta.setBounds(132, 54, 170, 20);
+		painelConsulta.add(lblErroConsulta);
+		
+		tfNomeConsulta = new JTextField();
+		tfNomeConsulta.setBounds(132, 21, 170, 28);
+		painelConsulta.add(tfNomeConsulta);
+		tfNomeConsulta.setColumns(10);
+		tfNomeConsulta.addKeyListener(new OuvinteConsulta());
+		
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.setBounds(213, 326, 89, 30);
+		btnExcluir.addActionListener(this);
+		painelConsulta.add(btnExcluir);
+		
+		btnEditar = new JButton("Editar");
+		btnEditar.setBounds(89, 326, 89, 30);
+		btnEditar.addActionListener(this);
+		painelConsulta.add(btnEditar);
 		
 		tfNomeCliente = new JTextField(new MaxLengthDocument(Cliente.TAMANHO_NOME), "", 10);
 		tfNomeCliente.setBounds(137, 11, 157, 28);
@@ -60,13 +122,12 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		tfEmailCliente.setBounds(137, 91, 157, 28);
 		tfEmailCliente.setColumns(10);
 		
-		tfFoneCliente = new JTextField();
+		tfFoneCliente = new JFormattedTextField(utilidades.mascara("(##)####-####"));
 		tfFoneCliente.setBounds(137, 131, 157, 28);
 		tfFoneCliente.setColumns(10);
 		
 		cbPerfis = new JComboBox();
 		cbPerfis.setBounds(137, 255, 157, 28);
-		
 		cbPerfis.setModel(ConstantesComboBox.modelPerfil);
 
 		btnNovo = new JButton("Novo");
@@ -140,8 +201,10 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		pfRepeteSenha.setBounds(137, 211, 157, 28);
 		painelCadastro.add(pfRepeteSenha);
 		
-		this.setBounds(100, 100, 401, 397);
+		this.setBounds(100, 100, 405, 424);
 		utilidades.formataJanela(this, "/imagens/usuarios.png");
+		
+		carregarTabela();
 		this.setVisible(true);
 	}
 	
@@ -154,11 +217,38 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
         return tela;
 	}
 	
+	private class OuvinteConsulta implements KeyListener{
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			
+			carregarTabela();
+			
+		}
+		
+		@Override
+		public void keyTyped(KeyEvent e) { }
+
+		@Override
+		public void keyPressed(KeyEvent e) { }
+		
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == btnSalvar){
-			clienteControle.inserir();
+			
+			//FIXME retornar o objeto salvo para o objeto cliente
+			
+			if(cliente.getIdcliente() == null){
+				clienteControle.inserir();
+			} else{
+				clienteControle.editar();
+			}
+			
+			tfNomeConsulta.setText("");
+			carregarTabela();
 		}
 		
 		else if(e.getSource() == btnCancelar){
@@ -169,7 +259,17 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 			cliente = new Cliente();
 			limparCampos();
 		}
-		
+		else if(e.getSource() == btnExcluir){
+			clienteControle.excluir();
+			tfNomeConsulta.setText("");
+			carregarTabela();
+		}
+		else if(e.getSource() == btnEditar){
+			
+			cliente = (Cliente) modelTableConsulta.getKeySelected();
+			setCliente();
+			painelTabbed.setSelectedIndex(0);
+		}
 	}
 
 	private void limparCampos(){
@@ -189,7 +289,43 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	private void cancelar(){
 		this.dispose();
 	}
+	
+	private void carregarTabela(){
+		
+		try {
+			
+			modelTableConsulta.clear();
+			
+			List<Cliente> list = clienteControle.consultaPorNome(tfNomeConsulta.getText());
+			
+			for(Cliente c : list){
+				
+				modelTableConsulta.addRowAndKey(c, c.getNome(), c.getPerfilStr());
+			}
+			
+			lblErroConsulta.setText("");
+			
+		} catch (SistemaException e) {
+			
+			lblErroConsulta.setText(e.getMessage());
+		}
+		finally{
+			modelTableConsulta.updateUI();
+		}
+		
+	}
 
+	private void setCliente(){
+		
+		tfNomeCliente.setText(cliente.getNome());
+		tfCPFCliente.setText(cliente.getCpf());
+		tfEmailCliente.setText(cliente.getEmail());
+		tfFoneCliente.setText(cliente.getTelefone());
+		pfSenha.setText(cliente.getSenha());
+		pfRepeteSenha.setText(cliente.getSenha());
+		
+	}
+	
 	public JTextField getTfNomeCliente() {
 		return tfNomeCliente;
 	}
@@ -222,4 +358,12 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		return cliente;
 	}
 
+	public MyModelTable getModelTableConsulta() {
+		return modelTableConsulta;
+	}
+
+	public JTextField getTfNomeConsulta() {
+		return tfNomeConsulta;
+	}
+	
 }
