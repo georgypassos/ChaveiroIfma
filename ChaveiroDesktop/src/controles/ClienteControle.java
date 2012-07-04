@@ -112,7 +112,7 @@ public class ClienteControle extends Controle{
 
 		/** verficando campos obrigatorios */
 		
-		System.out.println("nome do cliente: ->"+tela.getTfNomeCliente().getText().trim());
+		//TODO verificar porque quando o nome do cliente esta' preenchido, mas esta' vindo vazio para esse IF
 		
 		if(tela.getTfNomeCliente().getText().trim().equals(""))
 			throw new SistemaException("O nome do cliente e' obrigatorio");
