@@ -91,15 +91,15 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		if (e.getSource() == btnEmprestimo) {
 			TelaEmprestimo.getInstance().show(desktop);
 		}
-
+		else if (e.getSource() == btnRelatrios) {
+			
+		}
 		else if (e.getSource() == mntmCliente) {
 			TelaGerenciaCliente.getInstance().show(desktop);
 		}
-
 		else if (e.getSource() == mntmSala) {
 			TelaGerenciaSala.getInstance().show(desktop);
 		}
-
 		else if (e.getSource() == mntmSair) {
 			
 			int opcao = utilidades.getYesNoOption("Deseja realmente fechar o sistema?");

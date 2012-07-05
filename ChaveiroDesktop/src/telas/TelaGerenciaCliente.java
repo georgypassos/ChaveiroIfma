@@ -53,7 +53,6 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	private JPasswordField pfRepeteSenha;
 	
 	private Cliente cliente = new Cliente();
-	private JScrollPane scrollConsulta;
 	
 	private MyModelTable modelTableConsulta;
 	private JTextField tfNomeConsulta;
@@ -77,7 +76,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		painelTabbed.add("Consulta", painelConsulta);
 		painelConsulta.setLayout(null);
 		
-		scrollConsulta = new JScrollPane();
+		JScrollPane scrollConsulta = new JScrollPane();
 		scrollConsulta.setBounds(10, 85, 364, 220);
 		
 		JTable tabelaConsulta = new JTable();
