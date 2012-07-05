@@ -37,7 +37,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public TelaGerenciaSala() {
-		super("Cadastro de Salas", "/imagens/sala.png");
+		super("Cadastro de Salas", "/imagens/mnsala.png");
 		
 		painelCadastro = new JPanel();
 		painelCadastro.setBorder(new EmptyBorder(5, 5, 5, 5));
