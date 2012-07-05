@@ -86,15 +86,15 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnEmprestimo) {
-			TelaEmprestimo.getInstance().exibir(desktop);
+			TelaEmprestimo.getInstance().show(desktop);
 		}
 
 		else if (e.getSource() == mntmCliente) {
-			TelaGerenciaCliente.getInstance().exibir(desktop);
+			TelaGerenciaCliente.getInstance().show(desktop);
 		}
 
 		else if (e.getSource() == mntmSala) {
-			TelaGerenciaSala.getInstance().exibir(desktop);
+			TelaGerenciaSala.getInstance().show(desktop);
 		}
 
 		else if (e.getSource() == mntmSair) {

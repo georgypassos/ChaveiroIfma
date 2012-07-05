@@ -31,7 +31,7 @@ public abstract class MyInternalFrame extends JInternalFrame{
     	
     }
     
-    protected void exibir(JDesktopPane desktop) {
+    protected void show(JDesktopPane desktop) {
 
         if (!tela.natela) {
             desktop.add(tela);

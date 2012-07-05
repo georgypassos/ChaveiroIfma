@@ -18,12 +18,7 @@ public class ClienteDAO extends Dao<Cliente> {
 	}
 
 	// método de teste
-	public Cliente inserir(Cliente cliente) {
-
-		return merge(cliente);
-	}
-
-	public Cliente atualizar(Cliente cliente) {
+	public Cliente salvar(Cliente cliente) {
 
 		return merge(cliente);
 	}

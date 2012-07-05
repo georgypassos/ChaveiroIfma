@@ -1,13 +1,19 @@
 package util;
 
+import java.awt.Component;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+
+import telas.MyInternalFrame;
 
 public class Utilidades {
 
@@ -69,6 +75,20 @@ public class Utilidades {
 		component.setLocation(x, y);
 	}
 
+	public void limparCampos(MyInternalFrame component){
+		for(Component c: component.getComponents()){    
+            if(c instanceof JTextField){    
+               ((JTextField) c).setText(null);                   
+            }  
+            if(c instanceof JFormattedTextField){  
+                ((JFormattedTextField) c).setText(null);  
+            }  
+            if(c instanceof JTextArea){  
+               ((JTextArea) c).setText(null);                      
+            }
+		}
+	}
+	
 	public Date getData(String data, String inType, String outType) {
 
 		try {

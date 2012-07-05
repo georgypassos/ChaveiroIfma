@@ -28,7 +28,7 @@ public class ClienteControle extends Controle {
 		return clienteControle;
 	}
 	
-	public Cliente inserir(){
+	public Cliente salvar(){
 		
 		try {
 
@@ -36,28 +36,7 @@ public class ClienteControle extends Controle {
 			
 			validarCampos(cliente);
 			
-			cliente = clienteDao.inserir(cliente);
-			
-			utilidades.msgInformation("Cliente cadastrado com sucesso!");
-			
-			return cliente;
-			
-		} catch (SistemaException e) {
-			utilidades.msgWarning(e.getMessage());
-		}
-		return null;
-		
-	}
-	
-	public Cliente editar(){
-		
-		try {
-
-			Cliente cliente = getCliente();
-			
-			validarCampos(cliente);
-
-			cliente = clienteDao.atualizar(cliente);
+			cliente = clienteDao.salvar(cliente);
 			
 			utilidades.msgInformation("Cliente salvo com sucesso!");
 			
@@ -74,7 +53,7 @@ public class ClienteControle extends Controle {
 		
 		try {
 			
-			Cliente cliente = (Cliente) tela.getModelTableConsulta().getKeySelected();
+			Cliente cliente = (Cliente) tela.getModelTableConsulta().getSelectedKey();
 			
 			clienteDao.excluir(cliente);
 			
@@ -102,13 +81,16 @@ public class ClienteControle extends Controle {
 	private Cliente getCliente() {
 		
 		Cliente cliente = tela.getCliente();
+		if(cliente == null){
+			cliente = new Cliente();
+		}
 		
 		cliente.setCpf(tela.getTfCPFCliente().getText());
 		cliente.setSenha(new String(tela.getPfSenha().getPassword()));
 		cliente.setEmail(tela.getTfEmailCliente().getText());
 		cliente.setTelefone(tela.getTfFoneCliente().getText());
 		cliente.setNome(tela.getTfNomeCliente().getText());
-		cliente.setPerfil((Integer) utilidades.getValueFromCombo(tela.getCbPerfis())); //usar esse metodo para pegar valor da combo
+		cliente.setPerfil((Integer) utilidades.getValueFromCombo(tela.getCbPerfis())); 
 		
 		return cliente;
 	}
@@ -122,9 +104,6 @@ public class ClienteControle extends Controle {
 		if(cliente.getNome().trim().equals(""))
 			throw new SistemaException("O nome do cliente e' obrigatorio");
 		
-		if(cliente.getCpf().trim().length()<14)
-			throw new SistemaException("CPF digitado incorretamente");
-		
 		if(cliente.getSenha().trim().equals(""))
 			throw new SistemaException("O senha do cliente e' obrigatoria");
 		
@@ -133,15 +112,8 @@ public class ClienteControle extends Controle {
 		
 		/** validando campos */
 		
-		//validando telefone
-		int tamFone = cliente.getTelefone().trim().length();
-		
-		System.out.println("tamanho campo telefone: " + tamFone);
-		
-		if(tamFone>3 && tamFone<13)
-			throw new SistemaException("Telefone digitado incorretamente");
-		
 		//validando cpf
+		
 		if(!utilidades.validacpf(cliente.getCpf()))
 			throw new SistemaException("CPF invalido");
 		

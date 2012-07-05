@@ -1,6 +1,6 @@
 package telas;
 
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,7 +17,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -29,7 +28,6 @@ import util.MyModelTable;
 import controles.ClienteControle;
 import entidade.Cliente;
 import excecoes.SistemaException;
-import java.awt.Color;
 
 
 public class TelaGerenciaCliente extends MyInternalFrame implements ActionListener{
@@ -105,12 +103,14 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		tfNomeConsulta.addKeyListener(new OuvinteConsulta());
 		
 		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(213, 326, 89, 30);
+		btnExcluir.setIcon(new ImageIcon(TelaGerenciaCliente.class.getResource("/imagens/btdelete.png")));
+		btnExcluir.setBounds(213, 326, 102, 30);
 		btnExcluir.addActionListener(this);
 		painelConsulta.add(btnExcluir);
 		
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(89, 326, 89, 30);
+		btnEditar.setIcon(new ImageIcon(TelaGerenciaCliente.class.getResource("/imagens/btedit.png")));
+		btnEditar.setBounds(76, 326, 102, 30);
 		btnEditar.addActionListener(this);
 		painelConsulta.add(btnEditar);
 		
@@ -123,6 +123,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		tfEmailCliente.setColumns(10);
 		
 		tfFoneCliente = new JFormattedTextField(utilidades.mascara("(##)####-####"));
+		tfFoneCliente.setFocusLostBehavior(JFormattedTextField.PERSIST);
 		tfFoneCliente.setBounds(137, 131, 157, 28);
 		tfFoneCliente.setColumns(10);
 		
@@ -146,8 +147,10 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		btnCancelar.addActionListener(this);
 		
 		tfCPFCliente = new JFormattedTextField(utilidades.mascara("###.###.###-##"));
+		tfCPFCliente.setFocusLostBehavior(JFormattedTextField.PERSIST);
 		tfCPFCliente.setBounds(137, 51, 157, 28);
 		tfCPFCliente.setColumns(10);
+		
 		painelCadastro.setLayout(null);
 		
 		JLabel lblNomeCliente = new JLabel("Nome:");
@@ -204,12 +207,11 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		this.setBounds(100, 100, 405, 424);
 		utilidades.formataJanela(this, "/imagens/usuarios.png");
 		
-		carregarTabela();
+		carregarTabela("");
 		this.setVisible(true);
 	}
 	
 	public static MyInternalFrame getInstance() {
-		
 		if (tela == null) {
             tela = new TelaGerenciaCliente();
         }
@@ -221,9 +223,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			
-			carregarTabela();
-			
+			carregarTabela(tfNomeCliente.getText());
 		}
 		
 		@Override
@@ -238,15 +238,8 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == btnSalvar){
-			
-			if(cliente.getIdcliente() == null){
-				cliente = clienteControle.inserir();
-			} else{
-				cliente = clienteControle.editar();
-			}
-			
-			tfNomeConsulta.setText("");
-			carregarTabela();
+			cliente = clienteControle.salvar();
+			carregarTabela("");
 		}
 		
 		else if(e.getSource() == btnCancelar){
@@ -254,51 +247,31 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		}
 		
 		else if(e.getSource() == btnNovo){
-			cliente = new Cliente();
-			limparCampos();
+			utilidades.limparCampos(this);
 		}
 		else if(e.getSource() == btnExcluir){
 			clienteControle.excluir();
-			tfNomeConsulta.setText("");
-			carregarTabela();
+			carregarTabela("");
 		}
 		else if(e.getSource() == btnEditar){
-			
-			//FIXME
-			cliente = (Cliente) modelTableConsulta.getKeySelected();
-			setCliente();
+			cliente = (Cliente) modelTableConsulta.getSelectedKey();
+			setInfoCliente(cliente);
 			painelTabbed.setSelectedIndex(0);
 		}
 	}
 
-	private void limparCampos(){
-		for(Component c: painelCadastro.getComponents()){    
-            if(c instanceof JTextField){    
-               ((JTextField) c).setText(null);                   
-            }  
-            if(c instanceof JFormattedTextField){  
-                ((JFormattedTextField) c).setText(null);  
-            }  
-            if(c instanceof JTextArea){  
-               ((JTextArea) c).setText(null);                      
-            }
-		}
-	}
-	
 	private void cancelar(){
 		this.dispose();
 	}
 	
-	private void carregarTabela(){
+	private void carregarTabela(String nome){
 		
 		try {
 			
 			modelTableConsulta.clear();
 			
-			List<Cliente> list = clienteControle.consultaPorNome(tfNomeConsulta.getText());
-			
+			List<Cliente> list = clienteControle.consultaPorNome(nome);
 			for(Cliente c : list){
-				
 				modelTableConsulta.addRowAndKey(c, c.getNome(), c.getPerfilStr());
 			}
 			
@@ -314,7 +287,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		
 	}
 
-	private void setCliente(){
+	private void setInfoCliente(Cliente cliente){
 		
 		tfNomeCliente.setText(cliente.getNome());
 		tfCPFCliente.setText(cliente.getCpf());

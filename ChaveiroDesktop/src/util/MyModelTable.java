@@ -158,7 +158,7 @@ public class MyModelTable extends AbstractTableModel {
 
 	}
 
-	public Object getKeySelected() {
+	public Object getSelectedKey() {
 
 		int row = getSelectedRow();
 		if (row != -1) {
