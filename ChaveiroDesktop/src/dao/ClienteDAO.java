@@ -23,12 +23,16 @@ public class ClienteDAO extends Dao<Cliente> {
 		return merge(cliente);
 	}
 
-	public void excluir(Cliente cliente) {
+	public void excluir(int id) {
 		
-		remove(cliente);
-		
+		remove(id);
 	}
-	
+
+	public Cliente getCliente(int id) {
+
+		return get(id);
+	}
+
 	public List<Cliente> consultaPorNome(String nome){
 		
 		String sql = "FROM Cliente c WHERE c.nome LIKE :p0 ORDER BY c.nome";
@@ -38,9 +42,17 @@ public class ClienteDAO extends Dao<Cliente> {
 	
 	public boolean existeCpf(Cliente cliente){
 		
-		String sql = "FROM Cliente c WHERE c.cpf = :p0 AND c.idcliente != :p1";
+		List<Cliente> list = null;
 		
-		List<Cliente> list = search(sql, cliente.getCpf(), cliente.getIdcliente());
+		String sql = "FROM Cliente c WHERE c.cpf = :p0";
+		
+		if(cliente.getIdcliente() != null){
+			sql +=  " AND c.idcliente != :p1" ;
+			list = search(sql, cliente.getCpf(), cliente.getIdcliente());
+		}
+		else{
+			list = search(sql, cliente.getCpf());
+		}
 		
 		if(list != null && list.size()>0){
 			return true;
@@ -59,11 +71,6 @@ public class ClienteDAO extends Dao<Cliente> {
 			return list.get(0);
 		else
 			return null;
-	}
-
-	public Cliente getCliente(int id) {
-
-		return get(id);
 	}
 
 }

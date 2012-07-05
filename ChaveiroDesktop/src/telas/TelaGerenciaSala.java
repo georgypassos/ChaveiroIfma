@@ -37,7 +37,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public TelaGerenciaSala() {
-		super("Cadastro de Salas");
+		super("Cadastro de Salas", "/imagens/sala.png");
 		
 		painelCadastro = new JPanel();
 		painelCadastro.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -81,8 +81,8 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 		this.saladao = SalaDAO.getInstance();
 		this.sala = new Sala();
 		
-		this.setBounds(100, 100, 447, 282);
-		utilidades.formataJanela(this, "/imagens/sala.png");
+		this.setSize(447, 282);
+		utilidades.centralizaJanela(this, 40);
 		this.setVisible(true);
 	}
 	

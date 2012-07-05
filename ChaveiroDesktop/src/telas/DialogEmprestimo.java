@@ -9,7 +9,6 @@ import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +16,6 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
 import util.MaxLengthDocument;
-import util.Utilidades;
 import dao.ClienteDAO;
 import dao.EmprestimoDAO;
 import dao.SalaDAO;
@@ -25,11 +23,9 @@ import entidade.Cliente;
 import entidade.Emprestimo;
 import entidade.Sala;
 
-public class DialogEmprestimo extends JDialog implements ActionListener{
+public class DialogEmprestimo extends MyDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	
-	private Utilidades utilidades = Utilidades.getInstance();
 	
 	private final JPanel painelEmprestimo = new JPanel();
 	private JPasswordField pfSenha;
@@ -47,10 +43,10 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public DialogEmprestimo(Sala sala) {
+		super("Novo Empr\u00E9stimo");
 		this.sala = sala;
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogEmprestimo.class.getResource("/imagens/pnemprestimo.png")));
-		setTitle("Novo Empr\u00E9stimo");
 		
 		setBounds(100, 100, 325, 196);
 		
@@ -88,26 +84,11 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 		tfCpf.addKeyListener(new OuvinteCpf());
 		painelEmprestimo.add(tfCpf);
 		
-
-		utilidades.centralizaJanela(this, 60);
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.getRootPane().setDefaultButton(btnOk);
-		this.setModal(true);
 		this.setVisible(true);
 	}
 	
 	private class OuvinteCpf implements KeyListener{
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			
-			
-		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -119,6 +100,12 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 			}
 		}
 		
+		@Override
+		public void keyTyped(KeyEvent e) { }
+
+		@Override
+		public void keyPressed(KeyEvent e) { }
+
 	}
 
 	@Override

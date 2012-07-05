@@ -7,7 +7,6 @@ import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -15,18 +14,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import util.MaxLengthDocument;
-import util.Utilidades;
 import dao.EmprestimoDAO;
 import dao.SalaDAO;
 import entidade.Cliente;
 import entidade.Emprestimo;
 import entidade.Sala;
 
-public class DialogDevolucao extends JDialog implements ActionListener{
+public class DialogDevolucao extends MyDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	
-	private Utilidades utilidades = Utilidades.getInstance();
 	
 	private final JPanel painelDevolucao = new JPanel();
 	private JPasswordField pfSenha;
@@ -41,10 +37,10 @@ public class DialogDevolucao extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public DialogDevolucao(Emprestimo emprestimo) {
+		super("Devolu\u00E7\u00E3o");
 		this.emprestimo = emprestimo;
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogDevolucao.class.getResource("/imagens/pndevolucao.png")));
-		setTitle("Devolu\u00E7\u00E3o");
 		
 		setBounds(100, 100, 325, 196);
 		
@@ -85,10 +81,10 @@ public class DialogDevolucao extends JDialog implements ActionListener{
 		//seta o nome do cliente
 		tfNomeCliente.setText(emprestimo.getCliente().getNome());
 		
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.getRootPane().setDefaultButton(btnOk);
-		this.setModal(true);
 		this.setVisible(true);
+		
+		pfSenha.requestFocus();
 	}
 
 	@Override

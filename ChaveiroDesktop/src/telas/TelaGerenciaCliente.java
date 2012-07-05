@@ -1,6 +1,7 @@
 package telas;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -46,7 +48,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	
 	private JButton btnNovo, btnSalvar, btnCancelar, btnExcluir, btnEditar;
 	
-	private ClienteControle clienteControle = ClienteControle.getInstance(this); 
+	private ClienteControle clienteControle = ClienteControle.getInstance(); 
 	private JPasswordField pfSenha;
 	private JPasswordField pfRepeteSenha;
 	
@@ -61,7 +63,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	 * Create the frame.
 	 */
 	public TelaGerenciaCliente() {
-		super("Cadastro de Clientes");
+		super("Cadastro de Clientes", "/imagens/usuarios.png");
 				
 		painelTabbed = new JTabbedPane();
 		setContentPane(painelTabbed);
@@ -204,8 +206,8 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		pfRepeteSenha.setBounds(137, 211, 157, 28);
 		painelCadastro.add(pfRepeteSenha);
 		
-		this.setBounds(100, 100, 405, 424);
-		utilidades.formataJanela(this, "/imagens/usuarios.png");
+		this.setSize(405, 424);
+		utilidades.centralizaJanela(this, 40);
 		
 		carregarTabela("");
 		this.setVisible(true);
@@ -223,7 +225,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			carregarTabela(tfNomeCliente.getText());
+			carregarTabela(tfNomeConsulta.getText());
 		}
 		
 		@Override
@@ -238,7 +240,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == btnSalvar){
-			cliente = clienteControle.salvar();
+			cliente = clienteControle.salvar(this);
 			carregarTabela("");
 		}
 		
@@ -247,10 +249,10 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		}
 		
 		else if(e.getSource() == btnNovo){
-			utilidades.limparCampos(this);
+			novo();
 		}
 		else if(e.getSource() == btnExcluir){
-			clienteControle.excluir();
+			clienteControle.excluir(this);
 			carregarTabela("");
 		}
 		else if(e.getSource() == btnEditar){
@@ -260,6 +262,11 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		}
 	}
 
+	private void novo(){
+		cliente = new Cliente();
+		limparCampos();
+	}
+	
 	private void cancelar(){
 		this.dispose();
 	}
@@ -296,6 +303,20 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		pfSenha.setText(cliente.getSenha());
 		pfRepeteSenha.setText(cliente.getSenha());
 		
+	}
+
+	public void limparCampos(){
+		for(Component c: painelCadastro.getComponents()){    
+            if(c instanceof JTextField){    
+               ((JTextField) c).setText(null);                   
+            }  
+            if(c instanceof JFormattedTextField){  
+                ((JFormattedTextField) c).setText(null);  
+            }  
+            if(c instanceof JTextArea){  
+               ((JTextArea) c).setText(null);                      
+            }
+		}
 	}
 	
 	public JTextField getTfNomeCliente() {

@@ -1,16 +1,15 @@
 package telas;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import util.Utilidades;
@@ -27,7 +26,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	protected final JDesktopPane desktop = new JDesktopPane();
 
 	private JMenu mnGerencia;
-	private JButton btnEmprestimo;
+	private JButton btnEmprestimo, btnRelatrios;
 	private JMenu mnSistema;
 	private JMenuItem mntmSair;
 	private JMenuItem mntmCliente;
@@ -50,31 +49,35 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		menuBar.add(mnGerencia);
 
 		btnEmprestimo = new JButton("Empr\u00E9stimo de Chaves");
-		btnEmprestimo.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/chaves.png")));
+		btnEmprestimo.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/mnchaves.png")));
 		btnEmprestimo.addActionListener(this);
 		menuBar.add(btnEmprestimo);
 
 		mntmSair = new JMenuItem("Sair");
-		mntmSair.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/signout.png")));
+		mntmSair.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/mnsignout.png")));
 		mntmSair.addActionListener(this);
 		mnSistema.add(mntmSair);
 
 		mntmCliente = new JMenuItem("Clientes");
-		mntmCliente.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/usuarios.png")));
+		mntmCliente.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/mnusuarios.png")));
 		mntmCliente.addActionListener(this);
 		mnGerencia.add(mntmCliente);
 
 		mntmSala = new JMenuItem("Salas");
-		mntmSala.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/sala.png")));
+		mntmSala.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/mnsalas.png")));
 		mntmSala.addActionListener(this);
 		mnGerencia.add(mntmSala);
+		
+		btnRelatrios = new JButton("Relat\u00F3rios");
+		btnRelatrios.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/mnrelatorios.png")));
+		menuBar.add(btnRelatrios);
 		
 		getContentPane().add(desktop);
 		
 //		Image icone = this.getToolkit().getImage(getClass().getResource("/imagens/keys - fundo.png"));
 //        this.setIconImage(icone);
 		
-		desktop.setBackground(Color.gray);
+		desktop.setSize(600, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setSize(400, 300);
@@ -108,5 +111,4 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		}
 
 	}
-
 }

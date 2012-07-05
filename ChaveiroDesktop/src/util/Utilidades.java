@@ -1,19 +1,13 @@
 package util;
 
-import java.awt.Component;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-
-import telas.MyInternalFrame;
 
 public class Utilidades {
 
@@ -29,7 +23,7 @@ public class Utilidades {
 
 	public ImageIcon imgBtSalaAberta = new ImageIcon(getClass().getResource("/imagens/lock-open.png"));
 	public ImageIcon imgBtSalaFechada = new ImageIcon(getClass().getResource("/imagens/lock-close.png"));
-//	public ImageIcon imgBtSalaIndisponivel = new ImageIcon(getClass().getResource("/imagens/lock-disable.png"));
+	public ImageIcon imgBtSalaIndisponivel = new ImageIcon(getClass().getResource("/imagens/lock-disabled.png"));
 
 	public Object getValueFromCombo(javax.swing.JComboBox combo) {
 		javax.swing.ComboBoxModel model = combo.getModel();
@@ -61,9 +55,8 @@ public class Utilidades {
 		try {
 			gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
 		} catch (Exception e) {
-			System.out.println("Erro ao colocar imagem na janela...");
+			System.err.println("Erro ao colocar imagem na janela...");
 		}
-		centralizaJanela(gui, 40);
 
 		gui.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 	}
@@ -75,20 +68,6 @@ public class Utilidades {
 		component.setLocation(x, y);
 	}
 
-	public void limparCampos(MyInternalFrame component){
-		for(Component c: component.getComponents()){    
-            if(c instanceof JTextField){    
-               ((JTextField) c).setText(null);                   
-            }  
-            if(c instanceof JFormattedTextField){  
-                ((JFormattedTextField) c).setText(null);  
-            }  
-            if(c instanceof JTextArea){  
-               ((JTextArea) c).setText(null);                      
-            }
-		}
-	}
-	
 	public Date getData(String data, String inType, String outType) {
 
 		try {

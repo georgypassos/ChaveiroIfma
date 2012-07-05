@@ -2,6 +2,8 @@ package controles;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import telas.TelaGerenciaCliente;
 import dao.ClienteDAO;
 import entidade.Cliente;
@@ -9,32 +11,28 @@ import excecoes.SistemaException;
 
 public class ClienteControle extends Controle {
 	
-	private TelaGerenciaCliente tela;
 	private ClienteDAO clienteDao = ClienteDAO.getInstance();
 
 	private static ClienteControle clienteControle;
 	
-	private ClienteControle(Object view){
-		super(view);
-		tela = (TelaGerenciaCliente) this.view;
-	}
+	private ClienteControle(){ }
 	
-	public static ClienteControle getInstance(Object view){
+	public static ClienteControle getInstance(){
 		
 		if(clienteControle == null){
-			clienteControle = new ClienteControle(view);
+			clienteControle = new ClienteControle();
 		}
 		
 		return clienteControle;
 	}
 	
-	public Cliente salvar(){
+	public Cliente salvar(TelaGerenciaCliente tela){
 		
 		try {
 
-			Cliente cliente = getCliente();
+			Cliente cliente = getCliente(tela);
 			
-			validarCampos(cliente);
+			validarCampos(tela, cliente);
 			
 			cliente = clienteDao.salvar(cliente);
 			
@@ -45,19 +43,23 @@ public class ClienteControle extends Controle {
 		} catch (SistemaException e) {
 			utilidades.msgWarning(e.getMessage());
 		}
-		return null;
+		
+		return tela.getCliente();
 		
 	}
 	
-	public void excluir(){
+	public void excluir(TelaGerenciaCliente tela){
 		
 		try {
 			
 			Cliente cliente = (Cliente) tela.getModelTableConsulta().getSelectedKey();
-			
-			clienteDao.excluir(cliente);
-			
-			utilidades.msgInformation("Cliente excluido com sucesso!");
+
+			if(utilidades.getYesNoOption("Deseja realmente excluir " + cliente.getNome() + " ?") == JOptionPane.YES_OPTION){
+				
+				clienteDao.excluir(cliente.getIdcliente());
+				
+				utilidades.msgInformation("Cliente excluido com sucesso!");
+			}
 			
 		} catch (NullPointerException e) {
 			utilidades.msgError("Selecione um item para excluir");
@@ -78,12 +80,11 @@ public class ClienteControle extends Controle {
 		
 	}
 	
-	private Cliente getCliente() {
+	private Cliente getCliente(TelaGerenciaCliente tela) {
 		
 		Cliente cliente = tela.getCliente();
-		if(cliente == null){
-			cliente = new Cliente();
-		}
+		
+		System.out.println("ID do cliente:" + cliente.getIdcliente());
 		
 		cliente.setCpf(tela.getTfCPFCliente().getText());
 		cliente.setSenha(new String(tela.getPfSenha().getPassword()));
@@ -95,7 +96,7 @@ public class ClienteControle extends Controle {
 		return cliente;
 	}
 	
-	private void validarCampos(Cliente cliente) throws SistemaException {
+	private void validarCampos(TelaGerenciaCliente tela, Cliente cliente) throws SistemaException {
 
 		/** verficando campos obrigatorios */
 		

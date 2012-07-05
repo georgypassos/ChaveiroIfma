@@ -77,14 +77,12 @@ public abstract class Dao<T> {
 		
 		Query q = em.createQuery(sql);
 
-		int i = 0;
-
 		if (parameters != null) {
-			for (Object p : parameters) {
-				q.setParameter("p" + i, p);
-
-				i++;
+			
+			for(int i=0; i<parameters.length; i++){
+				q.setParameter("p" + i, parameters[i]);
 			}
+			
 		}
 		
 		List<T> list = q.getResultList();

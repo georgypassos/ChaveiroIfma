@@ -28,13 +28,12 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public TelaEmprestimo() {
-		super("Empréstimo de chaves");
+		super("Empréstimo de chaves", "/imagens/imgchave.png");
 		
 		painelEmprestimo = new JPanel();
 		
-		this.setBounds(100, 100, 458, 444);
-		utilidades.formataJanela(this, "/imagens/imgchave.png");
-		
+		this.setSize(458, 444);
+		utilidades.centralizaJanela(this, 40);
 		this.setMaximumSize(new Dimension(458, 600));
 		
 		carregarSalas();
@@ -68,6 +67,9 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 				}
 				else if(s.getStatus() == Sala.STATUS_FECHADA){
 					img = utilidades.imgBtSalaFechada;
+				}
+				else if(s.getStatus() == Sala.STATUS_INDISPONIVEL){
+					img = utilidades.imgBtSalaIndisponivel;
 				}
 				
 				String texto = s.getCodigo();

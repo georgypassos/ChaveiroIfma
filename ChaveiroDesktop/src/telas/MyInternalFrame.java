@@ -17,7 +17,7 @@ public abstract class MyInternalFrame extends JInternalFrame{
 	protected static MyInternalFrame tela = null;
     private boolean natela = false;
     
-    protected MyInternalFrame(String title){
+    protected MyInternalFrame(String title, String srcImagem){
     	super(title, false, true, false, true);
     	
     	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
@@ -29,6 +29,7 @@ public abstract class MyInternalFrame extends JInternalFrame{
             }
         });
     	
+    	utilidades.formataJanela(this, srcImagem);
     }
     
     protected void show(JDesktopPane desktop) {
