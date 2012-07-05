@@ -18,16 +18,14 @@ public class ClienteDAO extends Dao<Cliente> {
 	}
 
 	// método de teste
-	public void inserir(Cliente cliente) {
+	public Cliente inserir(Cliente cliente) {
 
-		insert(cliente);
-
+		return merge(cliente);
 	}
 
-	public void atualizar(Cliente cliente) {
+	public Cliente atualizar(Cliente cliente) {
 
-		update(cliente);
-
+		return merge(cliente);
 	}
 
 	public void excluir(Cliente cliente) {
@@ -43,11 +41,11 @@ public class ClienteDAO extends Dao<Cliente> {
 		return search(sql, "%"+nome+"%");
 	}
 	
-	public boolean existeCpf(String cpf){
+	public boolean existeCpf(Cliente cliente){
 		
-		String sql = "FROM Cliente c WHERE c.cpf = :p0";
+		String sql = "FROM Cliente c WHERE c.cpf = :p0 AND c.idcliente != :p1";
 		
-		List<Cliente> list = search(sql, cpf);
+		List<Cliente> list = search(sql, cliente.getCpf(), cliente.getIdcliente());
 		
 		if(list != null && list.size()>0){
 			return true;

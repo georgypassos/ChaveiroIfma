@@ -17,14 +17,14 @@ public class SalaDAO extends Dao<Sala> {
     }
     
     public void inserir(Sala sala){
-        this.insert(sala);
+        this.merge(sala);
         System.out.println("Sala salva com sucesso!");
     }
             
     public void mudarStatus(int id, int status){
         Sala sala = (Sala) this.get(id);
         sala.setStatus(status);
-        this.update(sala);
+        this.merge(sala);
     }
     
     public List<Sala> consultar(){

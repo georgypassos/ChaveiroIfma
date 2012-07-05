@@ -26,35 +26,29 @@ public abstract class Dao<T> {
 
 	}
 
-	protected void insert(T entidade) {
-		em = emf.createEntityManager();
-		
-		em.getTransaction().begin();
-		em.persist(entidade);
-		em.getTransaction().commit();
-		
-//		em.close();
-	}
+//	protected void insert(T entidade) {
+//		em = emf.createEntityManager();
+//		
+//		em.getTransaction().begin();
+//		em.persist(entidade);
+//		em.getTransaction().commit();
+//	}
 
-	public void update(T entidade) {
+	public T merge(T entidade) {
 		em = emf.createEntityManager();
 		
 		em.getTransaction().begin();
-		em.merge(entidade);
+		entidade = em.merge(entidade);
 		em.getTransaction().commit();
 		
-//		em.close();
+		return entidade;
 	}
 
 	@SuppressWarnings("unchecked")
 	public T get(int id) {
 		em = emf.createEntityManager();
 		
-		Object object = em.find(classe, id);
-		
-//		em.close();
-		
-		return (T) object;
+		return (T) em.find(classe, id);
 	}
 
 	public void remove(int id) {
@@ -66,8 +60,6 @@ public abstract class Dao<T> {
 			em.remove(entidade);
 			em.getTransaction().commit();
 		}
-		
-//		em.close();
 	}
 	
 	public void remove(T entidade){
@@ -97,8 +89,6 @@ public abstract class Dao<T> {
 		
 		List<T> list = q.getResultList();
 		
-//		em.close();
-
 		return list;
 	}
 

@@ -39,14 +39,13 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private List<Emprestimo> listEmprestimo;
 	
-	//não sei quais os perfis ao certo, alterem aqui...
 	public static final int PERFIL_USUARIO = 0;
 	public static final int PERFIL_ADMINISTRADOR = 1;
 	public static final int PERFIL_CLIENTE = 2;
-	//...
 	
-	public static final int TAMANHO_SENHA = 6;
-	public static final int TAMANHO_NOME = 15;
+	public static final int TAMANHO_MIN_SENHA = 4;
+	public static final int TAMANHO_MAX_SENHA = 6;
+	public static final int TAMANHO_MAX_NOME = 15;
 
 	public Cliente() {
 		super();

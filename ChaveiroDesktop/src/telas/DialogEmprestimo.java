@@ -79,7 +79,7 @@ public class DialogEmprestimo extends JDialog implements ActionListener{
 		lblSenha.setBounds(10, 60, 89, 14);
 		painelEmprestimo.add(lblSenha);
 		
-		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_SENHA), "", 10);
+		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_MAX_SENHA), "", 10);
 		pfSenha.setBounds(109, 53, 139, 28);
 		painelEmprestimo.add(pfSenha);
 		

@@ -114,7 +114,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		btnEditar.addActionListener(this);
 		painelConsulta.add(btnEditar);
 		
-		tfNomeCliente = new JTextField(new MaxLengthDocument(Cliente.TAMANHO_NOME), "", 10);
+		tfNomeCliente = new JTextField(new MaxLengthDocument(Cliente.TAMANHO_MAX_NOME), "", 10);
 		tfNomeCliente.setBounds(137, 11, 157, 28);
 		tfNomeCliente.setColumns(10);
 		
@@ -193,11 +193,11 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		painelCadastro.add(tfEmailCliente);
 		painelCadastro.add(cbPerfis);
 		
-		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_SENHA), "", 10);
+		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_MAX_SENHA), "", 10);
 		pfSenha.setBounds(137, 171, 157, 28);
 		painelCadastro.add(pfSenha);
 		
-		pfRepeteSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_SENHA), "", 10);
+		pfRepeteSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_MAX_SENHA), "", 10);
 		pfRepeteSenha.setBounds(137, 211, 157, 28);
 		painelCadastro.add(pfRepeteSenha);
 		
@@ -239,12 +239,10 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		
 		if(e.getSource() == btnSalvar){
 			
-			//FIXME retornar o objeto salvo para o objeto cliente
-			
 			if(cliente.getIdcliente() == null){
-				clienteControle.inserir();
+				cliente = clienteControle.inserir();
 			} else{
-				clienteControle.editar();
+				cliente = clienteControle.editar();
 			}
 			
 			tfNomeConsulta.setText("");
@@ -266,6 +264,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		}
 		else if(e.getSource() == btnEditar){
 			
+			//FIXME
 			cliente = (Cliente) modelTableConsulta.getKeySelected();
 			setCliente();
 			painelTabbed.setSelectedIndex(0);

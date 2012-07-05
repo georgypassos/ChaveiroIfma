@@ -73,7 +73,7 @@ public class DialogDevolucao extends JDialog implements ActionListener{
 		lblSenha.setBounds(10, 60, 89, 14);
 		painelDevolucao.add(lblSenha);
 		
-		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_SENHA), "", 10);
+		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_MAX_SENHA), "", 10);
 		pfSenha.setBounds(109, 53, 139, 28);
 		painelDevolucao.add(pfSenha);
 		

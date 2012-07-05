@@ -7,7 +7,7 @@ import dao.ClienteDAO;
 import entidade.Cliente;
 import excecoes.SistemaException;
 
-public class ClienteControle extends Controle{
+public class ClienteControle extends Controle {
 	
 	private TelaGerenciaCliente tela;
 	private ClienteDAO clienteDao = ClienteDAO.getInstance();
@@ -28,40 +28,45 @@ public class ClienteControle extends Controle{
 		return clienteControle;
 	}
 	
-	public void inserir(){
+	public Cliente inserir(){
 		
 		try {
-			
-			validarCampos();
-			
+
 			Cliente cliente = getCliente();
 			
-			clienteDao.inserir(cliente);
+			validarCampos(cliente);
+			
+			cliente = clienteDao.inserir(cliente);
 			
 			utilidades.msgInformation("Cliente cadastrado com sucesso!");
 			
+			return cliente;
+			
 		} catch (SistemaException e) {
 			utilidades.msgWarning(e.getMessage());
 		}
+		return null;
 		
 	}
 	
-	public void editar(){
+	public Cliente editar(){
 		
 		try {
-			
-			//FIXME primeiro pegar o cliente, depois validar os campos
+
 			Cliente cliente = getCliente();
 			
-			validarCampos();
-			
-			clienteDao.atualizar(cliente);
+			validarCampos(cliente);
+
+			cliente = clienteDao.atualizar(cliente);
 			
 			utilidades.msgInformation("Cliente salvo com sucesso!");
+			
+			return cliente;
 			
 		} catch (SistemaException e) {
 			utilidades.msgWarning(e.getMessage());
 		}
+		return null;
 		
 	}
 	
@@ -108,40 +113,46 @@ public class ClienteControle extends Controle{
 		return cliente;
 	}
 	
-	private void validarCampos() throws SistemaException {
+	private void validarCampos(Cliente cliente) throws SistemaException {
 
 		/** verficando campos obrigatorios */
 		
 		//TODO verificar porque quando o nome do cliente esta' preenchido, mas esta' vindo vazio para esse IF
 		
-		if(tela.getTfNomeCliente().getText().trim().equals(""))
+		if(cliente.getNome().trim().equals(""))
 			throw new SistemaException("O nome do cliente e' obrigatorio");
 		
-		if(tela.getTfCPFCliente().getText().trim().length()<14)
+		if(cliente.getCpf().trim().length()<14)
 			throw new SistemaException("CPF digitado incorretamente");
 		
-		if(new String(tela.getPfSenha().getPassword()).trim().equals(""))
+		if(cliente.getSenha().trim().equals(""))
 			throw new SistemaException("O senha do cliente e' obrigatoria");
 		
 		if(new String(tela.getPfRepeteSenha().getPassword()).trim().equals(""))
 			throw new SistemaException("Repita a senha");
 		
-		//FIXME as senhas devem ter um numero minimo de caracteres tambem 
-		
-		
 		/** validando campos */
 		
-		//FIXME validar o telefone (apenas se ele tiver sido digitado)
+		//validando telefone
+		int tamFone = cliente.getTelefone().trim().length();
+		
+		System.out.println("tamanho campo telefone: " + tamFone);
+		
+		if(tamFone>3 && tamFone<13)
+			throw new SistemaException("Telefone digitado incorretamente");
 		
 		//validando cpf
-		if(!utilidades.validacpf(tela.getTfCPFCliente().getText()))
+		if(!utilidades.validacpf(cliente.getCpf()))
 			throw new SistemaException("CPF invalido");
 		
-		if(clienteDao.existeCpf(tela.getTfCPFCliente().getText()))
+		if(clienteDao.existeCpf(cliente))
 			throw new SistemaException("CPF ja cadastrado");
 		
-		String senha1 = new String(tela.getPfSenha().getPassword());
+		String senha1 = new String(cliente.getSenha());
 		String senha2 = new String(tela.getPfRepeteSenha().getPassword());
+		
+		if(senha1.length() < Cliente.TAMANHO_MIN_SENHA)
+			throw new SistemaException("A senha deve ter no minimo " + Cliente.TAMANHO_MIN_SENHA + " caracteres");
 		
 		//validando se as senhas digitadas sao iguais
 		if(!senha1.equals(senha2))

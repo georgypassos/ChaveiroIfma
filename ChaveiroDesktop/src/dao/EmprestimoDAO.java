@@ -17,13 +17,13 @@ public class EmprestimoDAO extends Dao<Emprestimo> {
 	
 	public void inserir(Emprestimo e){
 		
-		insert(e);
+		merge(e);
 		
 	}
 	
 	public void atualizar(Emprestimo e){
 		
-		update(e);
+		merge(e);
 		
 	}
 	
