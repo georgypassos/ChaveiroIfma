@@ -48,7 +48,7 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 	private ClienteControle clienteControle = ClienteControle.getInstance();
 	private SalaControle salaControle = SalaControle.getInstance();
 	
-	public TelaRelatorio() {
+	private TelaRelatorio() {
 		super("Gera\u00E7\u00E3o de relat\u00F3rios", "/imagens/mnrelatorios.png");
 
 		painelTabbed = new JTabbedPane();

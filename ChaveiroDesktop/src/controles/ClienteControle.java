@@ -68,7 +68,10 @@ public class ClienteControle extends Controle {
 	}
 	
 	public Cliente getClienteByLogin(Cliente cliente) {
-
+		
+		//TODO lancar excecao se o cliente for NULL
+		
+		
 		return clienteDao.getClienteByLogin(cliente);
 	}
 	

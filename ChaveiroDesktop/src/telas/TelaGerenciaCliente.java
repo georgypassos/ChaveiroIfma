@@ -62,7 +62,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	/**
 	 * Create the frame.
 	 */
-	public TelaGerenciaCliente() {
+	private TelaGerenciaCliente() {
 		super("Cadastro de Clientes", "/imagens/mnusuarios.png");
 				
 		painelTabbed = new JTabbedPane();

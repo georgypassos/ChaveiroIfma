@@ -53,7 +53,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public TelaGerenciaSala() {
+	private TelaGerenciaSala() {
 		super("Cadastro de Salas", "/imagens/mnsalas.png");
 		
 		painelTabbed = new JTabbedPane();

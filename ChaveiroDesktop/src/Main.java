@@ -3,7 +3,7 @@ import java.awt.EventQueue;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import telas.FramePrincipal;
+import telas.FrameLogin;
 import dao.ClienteDAO;
 
 
@@ -29,7 +29,7 @@ public class Main {
 			public void run() {
 				try {
 					ClienteDAO.getInstance(); //FIXME mudar essa forma de inicializar o hibernate
-					new FramePrincipal();
+					new FrameLogin();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

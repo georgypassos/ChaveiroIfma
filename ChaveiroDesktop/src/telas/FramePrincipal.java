@@ -40,7 +40,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public FramePrincipal() {
+	private FramePrincipal() {
 		setTitle("Chaveiro do IFMA");
 		setBounds(100, 100, 450, 300);
 

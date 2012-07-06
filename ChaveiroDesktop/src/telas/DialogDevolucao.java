@@ -25,10 +25,9 @@ public class DialogDevolucao extends MyDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	
 	private final JPanel painelDevolucao = new JPanel();
+	
 	private JPasswordField pfSenha;
-	
 	private JFormattedTextField tfCpf;
-	
 	private JButton btnOk, btnCancelar;
 
 	private EmprestimoControle emprestimoControle = EmprestimoControle.getInstance();

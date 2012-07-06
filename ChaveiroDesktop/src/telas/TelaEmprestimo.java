@@ -26,10 +26,7 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 	private SalaDAO salaDAO = SalaDAO.getInstance();
 	private List<Sala> listSala;
 	
-	/**
-	 * Create the frame.
-	 */
-	public TelaEmprestimo() {
+	private TelaEmprestimo() {
 		super("Empréstimo de chaves", "/imagens/imgchave.png");
 		
 		painelEmprestimo = new JPanel();
