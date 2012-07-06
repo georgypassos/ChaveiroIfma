@@ -1,5 +1,6 @@
 package telas;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,7 +25,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	private Utilidades utilidades = Utilidades.getInstance();
 	
 	/**
-	 * @wbp.nonvisual location=80,339
+	 * @wbp.nonvisual location=200,339
 	 */
 	protected final JDesktopPane desktop = new JDesktopPane();
 
@@ -44,6 +45,8 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		setTitle("Chaveiro do IFMA");
 		setBounds(100, 100, 450, 300);
 
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameLogin.class.getResource("/imagens/pnsistema.png")));
+		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -80,9 +83,6 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		
 		getContentPane().add(desktop);
 		
-//		Image icone = this.getToolkit().getImage(getClass().getResource("/imagens/keys - fundo.png"));
-//        this.setIconImage(icone);
-		
 		desktop.setSize(600, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -91,6 +91,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		setPermissoes();
+//		addBackground();
 	}
 	
 	public static FramePrincipal getInstance(){
@@ -100,6 +101,13 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		
 		return framePrincipal;
 	}
+	
+//	private void addBackground(){
+//		JLabel lblBack = new JLabel();
+//		lblBack.setIcon(new ImageIcon(FrameLogin.class.getResource("/imagens/background.png")));
+//		lblBack.setBounds(10, 10, 800, 800);
+//		desktop.add(lblBack);
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

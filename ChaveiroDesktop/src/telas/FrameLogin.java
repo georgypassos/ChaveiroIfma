@@ -1,5 +1,6 @@
 package telas;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -35,16 +36,18 @@ public class FrameLogin extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public FrameLogin() {
+		this.setTitle("Chaveiro do IFMA");
+		
 		setBounds(100, 100, 349, 352);
 		painelLogin = new JPanel();
 		
-//		TODO setIconImage(Toolkit.getDefaultToolkit().getImage(FrameLogin.class.getResource("/imagens/pnlogin.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameLogin.class.getResource("/imagens/pnsistema.png")));
 		
 		this.setContentPane(painelLogin);
 		painelLogin.setLayout(null);
 		
 		btnLogin = new JButton("Login");
-		btnLogin.setIcon(new ImageIcon(DialogEmprestimo.class.getResource("/imagens/btok.png")));
+		btnLogin.setIcon(new ImageIcon(FrameLogin.class.getResource("/imagens/btlogin.png"))); 
 		btnLogin.setBounds(55, 267, 98, 30);
 		btnLogin.addActionListener(this);
 		painelLogin.add(btnLogin);
@@ -77,6 +80,12 @@ public class FrameLogin extends JFrame implements ActionListener {
 		
 		utilidades.centralizaJanela(this, 140);
 		this.getRootPane().setDefaultButton(btnLogin);
+		
+		JLabel lblIcone = new JLabel("");
+		lblIcone.setIcon(new ImageIcon(FrameLogin.class.getResource("/imagens/login.png")));
+		lblIcone.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIcone.setBounds(85, 11, 202, 134);
+		painelLogin.add(lblIcone);
 		this.setResizable(false);
 		this.setVisible(true);
 		
@@ -149,5 +158,4 @@ public class FrameLogin extends JFrame implements ActionListener {
 		
 		return c;
 	}
-	
 }
