@@ -20,7 +20,6 @@ public class ClienteDAO extends Dao<Cliente> {
 		return clienteDAO;
 	}
 
-	// método de teste
 	public Cliente salvar(Cliente cliente) {
 
 		return merge(cliente);

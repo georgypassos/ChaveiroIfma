@@ -67,6 +67,11 @@ public class ClienteControle extends Controle {
 		
 	}
 	
+	public Cliente getClienteByLogin(Cliente cliente) {
+
+		return clienteDao.getClienteByLogin(cliente);
+	}
+	
 	public List<Cliente> consultaPorNome(String nome) throws SistemaException{
 		
 		List<Cliente> list = clienteDao.consultaPorNome(nome);
@@ -84,8 +89,6 @@ public class ClienteControle extends Controle {
 		
 		Cliente cliente = tela.getCliente();
 		
-		System.out.println("ID do cliente:" + cliente.getIdcliente());
-		
 		cliente.setCpf(tela.getTfCPFCliente().getText());
 		cliente.setSenha(new String(tela.getPfSenha().getPassword()));
 		cliente.setEmail(tela.getTfEmailCliente().getText());
@@ -95,7 +98,7 @@ public class ClienteControle extends Controle {
 		
 		return cliente;
 	}
-	
+
 	private void validarCampos(TelaGerenciaCliente tela, Cliente cliente) throws SistemaException {
 
 		/** verficando campos obrigatorios */
@@ -132,5 +135,5 @@ public class ClienteControle extends Controle {
 			throw new SistemaException("As senhas nao sao iguais");
 		
 	}
-	
+
 }

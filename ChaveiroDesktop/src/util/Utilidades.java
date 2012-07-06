@@ -56,7 +56,7 @@ public class Utilidades {
 		try {
 			gui.setFrameIcon(new javax.swing.ImageIcon(getClass().getResource(srcImagem)));
 		} catch (Exception e) {
-			System.err.println("Erro ao colocar imagem na janela...");
+			System.err.println("Erro ao colocar imagem na janela... " + gui.getClass().getSimpleName() );
 		}
 
 		gui.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);

@@ -30,14 +30,14 @@ public class EmprestimoDAO extends Dao<Emprestimo> {
 
 	public List<Emprestimo> getEmprestimos(Cliente cliente) {
 
-		String sql = "FROM Emprestimo e WHERE e.clienteEntrega.idcliente = :p0 OR e.clienteRetirada.idcliente = :p0";
+		String sql = "FROM Emprestimo e WHERE e.clienteEntrega.idcliente = :p0 OR e.clienteRetirada.idcliente = :p0 ORDER BY e.dataRetirada DESC ";
 
 		return search(sql, cliente.getIdcliente());
 	}
 
 	public List<Emprestimo> getEmprestimos(Sala sala) {
 
-		String sql = "FROM Emprestimo e WHERE e.sala.idsala = :p0";
+		String sql = "FROM Emprestimo e WHERE e.sala.idsala = :p0 ORDER BY e.dataRetirada DESC ";
 
 		return search(sql, sala.getIdsala());
 	}

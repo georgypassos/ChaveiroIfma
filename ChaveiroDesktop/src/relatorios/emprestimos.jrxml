@@ -3,8 +3,11 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="tipoRelatorio" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	<parameter name="tipoRelatorio" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="referencia" class="java.lang.String">
+		<defaultValueExpression><![CDATA["algo"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[]]>
@@ -31,9 +34,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{tipoRelatorio}.equals(1)
-    ? "  "+$F{sala}.getNome():
-    "  "+$F{clienteRetirada}.getNome())  ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["  "+$P{referencia}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="49b6edb7-4006-421e-a0b0-86adcd80ccb2" x="0" y="0" width="555" height="59"/>
@@ -41,14 +42,14 @@
 					<font size="28"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Empréstimos por " +
-($P{tipoRelatorio}.equals(1) ? "sala": "cliente")]]></textFieldExpression>
+($P{tipoRelatorio}.equals("1") ? "sala": "cliente")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="95ce361c-0e05-443b-9bd7-f1d8f53672c3" x="0" y="59" width="150" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{tipoRelatorio}.equals(1) ? "Sala:": "Cliente:")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{tipoRelatorio}.equals("1") ? "Sala:": "Cliente:")]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

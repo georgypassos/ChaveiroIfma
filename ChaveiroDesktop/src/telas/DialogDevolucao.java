@@ -17,14 +17,14 @@ import javax.swing.SwingConstants;
 import util.MaxLengthDocument;
 import controles.EmprestimoControle;
 import entidade.Cliente;
-import entidade.Sala;
+import entidade.Emprestimo;
 import excecoes.SistemaException;
 
-public class DialogEmprestimo extends MyDialog implements ActionListener{
+public class DialogDevolucao extends MyDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	
-	private final JPanel painelEmprestimo = new JPanel();
+	private final JPanel painelDevolucao = new JPanel();
 	private JPasswordField pfSenha;
 	
 	private JFormattedTextField tfCpf;
@@ -32,52 +32,52 @@ public class DialogEmprestimo extends MyDialog implements ActionListener{
 	private JButton btnOk, btnCancelar;
 
 	private EmprestimoControle emprestimoControle = EmprestimoControle.getInstance();
-	private Sala sala;
+	private Emprestimo emprestimo;
 	
 	/**
 	 * Create the dialog.
 	 */
-	public DialogEmprestimo(Sala sala) {
-		super("Novo Empr\u00E9stimo");
-		this.sala = sala;
+	public DialogDevolucao(Emprestimo emprestimo) {
+		super("Devolu\u00E7\u00E3o");
+		this.emprestimo = emprestimo;
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogEmprestimo.class.getResource("/imagens/pnemprestimo.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogEmprestimo.class.getResource("/imagens/pndevolucao.png")));
 		
 		setBounds(100, 100, 325, 196);
 		
-		this.setContentPane(painelEmprestimo);
-		painelEmprestimo.setLayout(null);
+		this.setContentPane(painelDevolucao);
+		painelDevolucao.setLayout(null);
 		
 		btnOk = new JButton("OK");
 		btnOk.setIcon(new ImageIcon(DialogEmprestimo.class.getResource("/imagens/btok.png")));
 		btnOk.setBounds(41, 112, 98, 30);
 		btnOk.addActionListener(this);
-		painelEmprestimo.add(btnOk);
+		painelDevolucao.add(btnOk);
 		
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setIcon(new ImageIcon(DialogEmprestimo.class.getResource("/imagens/btcancel.png")));
 		btnCancelar.setBounds(163, 112, 110, 30);
 		btnCancelar.addActionListener(this);
-		painelEmprestimo.add(btnCancelar);
+		painelDevolucao.add(btnCancelar);
 		
 		JLabel lblCpf = new JLabel("CPF:");
 		lblCpf.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCpf.setBounds(10, 18, 89, 14);
-		painelEmprestimo.add(lblCpf);
+		painelDevolucao.add(lblCpf);
 		
 		JLabel lblSenha = new JLabel("Senha:");
 		lblSenha.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSenha.setBounds(10, 60, 89, 14);
-		painelEmprestimo.add(lblSenha);
+		painelDevolucao.add(lblSenha);
 		
 		pfSenha = new JPasswordField(new MaxLengthDocument(Cliente.TAMANHO_MAX_SENHA), "", 10);
 		pfSenha.setBounds(109, 53, 139, 28);
-		painelEmprestimo.add(pfSenha);
+		painelDevolucao.add(pfSenha);
 		
 		tfCpf = new JFormattedTextField(utilidades.mascara("###.###.###-##"));
 		tfCpf.setBounds(109, 11, 139, 28);
 		tfCpf.addKeyListener(new OuvinteCpf());
-		painelEmprestimo.add(tfCpf);
+		painelDevolucao.add(tfCpf);
 		
 		this.getRootPane().setDefaultButton(btnOk);
 		this.setVisible(true);
@@ -109,7 +109,7 @@ public class DialogEmprestimo extends MyDialog implements ActionListener{
 		if(e.getSource() == btnOk){
 			
 			try {
-				emprestimoControle.efetuarEmprestimo(this);
+				emprestimoControle.efetuarDevolucao(this);
 				this.dispose();
 			} catch (SistemaException ex) {
 				utilidades.msgError(ex.getMessage());
@@ -118,9 +118,14 @@ public class DialogEmprestimo extends MyDialog implements ActionListener{
 		}
 		
 		else if(e.getSource() == btnCancelar){
+			
 			this.dispose();
 		}
 		
+	}
+	
+	public Emprestimo getEmprestimo() {
+		return emprestimo;
 	}
 
 	public JPasswordField getPfSenha() {
@@ -129,10 +134,6 @@ public class DialogEmprestimo extends MyDialog implements ActionListener{
 
 	public JFormattedTextField getTfCpf() {
 		return tfCpf;
-	}
-
-	public Sala getSala() {
-		return sala;
 	}
 	
 }

@@ -35,13 +35,15 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		painelEmprestimo = new JPanel();
 		
 		this.setSize(458, 444);
-		utilidades.centralizaJanela(this, 40);
 		this.setMaximumSize(new Dimension(458, 600));
-		
-		carregarSalas();
-		this.setVisible(true);
 	}
 
+	@Override
+	protected void initialize() {
+		carregarSalas();
+		utilidades.centralizaJanela(this, 40);
+	}
+	
 	public static TelaEmprestimo getInstance() {
 		if(tela == null){
 			tela = new TelaEmprestimo();
@@ -49,7 +51,7 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		return tela;
 	}
 	
-	//FIXME fazer esse método mais variável
+	//FIXME fazer esse método mais variável (adaptável quando o numero de salas aumentar)
 	public void carregarSalas(){
 		
 		atualizaPainel();
@@ -129,7 +131,7 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		}
 		else if(s.getStatus() == Sala.STATUS_ABERTA){
 			
-//			FIXME new DialogDevolucao(s.getUltimoEmprestimo());
+			new DialogDevolucao(s.getUltimoEmprestimo());
 			 
 			carregarSalas();
 		}

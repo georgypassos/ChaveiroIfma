@@ -17,9 +17,10 @@ public class RelatorioEmprestimo extends Relatorio{
 		super(fileJasper);
 	}
 	
-	public void openPdf(List<Emprestimo> list, String nomeArquivo, int tipo) throws SistemaException {
-		HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
-		hashMap.put("tipoRelatorio", tipo);
+	public void gerar(List<Emprestimo> list, String referencia, int tipo) throws SistemaException {
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("tipoRelatorio", ""+tipo);
+		hashMap.put("referencia", referencia);
 		
 		openJasper(list, hashMap);
 	}

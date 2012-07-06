@@ -20,15 +20,25 @@ public class SalaDAO extends Dao<Sala> {
         return salaDAO;
     }
     
-    public void inserir(Sala sala){
-        this.merge(sala);
-        System.out.println("Sala salva com sucesso!");
-    }
-            
-    public void mudarStatus(int id, int status){
+    public Sala salvar(Sala sala) {
+
+		return merge(sala);
+	}
+
+	public void excluir(int id) {
+		
+		remove(id);
+	}
+
+	public Sala getSala(int id) {
+
+		return get(id);
+	}
+
+    public Sala mudarStatus(int id, int status){
         Sala sala = (Sala) this.get(id);
         sala.setStatus(status);
-        this.merge(sala);
+        return merge(sala);
     }
     
     public List<Sala> consultar(){

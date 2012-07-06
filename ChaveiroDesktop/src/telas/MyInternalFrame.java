@@ -4,6 +4,7 @@ import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.event.InternalFrameEvent;
 
 import util.Utilidades;
 
@@ -13,21 +14,30 @@ public abstract class MyInternalFrame extends JInternalFrame{
 
     protected Utilidades utilidades = Utilidades.getInstance();
     
-    protected boolean init = false;
+    private boolean init = false;
     
     protected MyInternalFrame(String title, String srcImagem){
     	super(title, false, true, false, true);
     	
     	utilidades.formataJanela(this, srcImagem);
+    	
+    	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+
+            @Override
+            public void internalFrameClosed(InternalFrameEvent arg0) {
+                init = false;
+            }
+        });
     }
 
 	public void show(JDesktopPane desktopPane){
-		
 		if (!init) {
 			init = true;
 			
 			desktopPane.add(this);
 			this.setVisible(true);
+			
+			initialize();
 		}
 
 		desktopPane.moveToFront(this);
@@ -39,4 +49,6 @@ public abstract class MyInternalFrame extends JInternalFrame{
 		}
 	}
 
+	protected abstract void initialize();
+	
 }

@@ -34,10 +34,6 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 
 	private static TelaRelatorio tela;
 	
-	private EmprestimoControle emprestimoControle = EmprestimoControle.getInstance();
-	private ClienteControle clienteControle = ClienteControle.getInstance();
-	private SalaControle salaControle = SalaControle.getInstance();
-	
 	private JPanel painelCliente, painelSala;
 	private JTabbedPane painelTabbed;
 
@@ -48,6 +44,10 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 	private JButton btnRelatorioCliente, btnRelatorioSala;
 	private JLabel lblErroCliente, lblErroSala;
 
+	private EmprestimoControle emprestimoControle = EmprestimoControle.getInstance();
+	private ClienteControle clienteControle = ClienteControle.getInstance();
+	private SalaControle salaControle = SalaControle.getInstance();
+	
 	public TelaRelatorio() {
 		super("Gera\u00E7\u00E3o de relat\u00F3rios", "/imagens/mnrelatorios.png");
 
@@ -62,6 +62,8 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		painelSala.setLayout(null);
 		painelTabbed.add("Salas", painelSala);
 
+		// --- painel do cliente
+		
 		JScrollPane scrollCliente = new JScrollPane();
 		scrollCliente.setBounds(25, 74, 358, 281);
 
@@ -94,7 +96,7 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		btnRelatorioCliente.addActionListener(this);
 		painelCliente.add(btnRelatorioCliente);
 
-		// ---------------------------------------------------
+		// --- painel da sala
 
 		JScrollPane scrollSala = new JScrollPane();
 		scrollSala.setBounds(25, 74, 358, 281);
@@ -128,13 +130,14 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		btnRelatorioSala.addActionListener(this);
 		painelSala.add(btnRelatorioSala);
 
-		//
 		this.setSize(419, 471);
-		utilidades.centralizaJanela(this, 40);
-
+	}
+	
+	@Override
+	protected void initialize() {
 		carregarClientes("");
 		carregarSalas("");
-		this.setVisible(true);
+		utilidades.centralizaJanela(this, 40);
 	}
 	
 	public static TelaRelatorio getInstance() {
@@ -147,7 +150,6 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
 		//TODO gerar relatorios por periodo
 		
 		if (e.getSource() == btnRelatorioCliente) {
@@ -156,23 +158,24 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 
 				Cliente cliente = (Cliente) modelTableCliente.getSelectedKey();
 				
-				new RelatorioEmprestimo().openPdf(emprestimoControle.getEmprestimos(cliente), cliente.getNome(), RelatorioEmprestimo.TIPO_CLIENTE);
+				new RelatorioEmprestimo().gerar(emprestimoControle.getEmprestimos(cliente), cliente.getNome(), RelatorioEmprestimo.TIPO_CLIENTE);
 				
-			} catch (SistemaException ex) {
-				utilidades.msgError("Erro ao tentar gerar relatório");
+			} catch (Exception ex) {
+				utilidades.msgError("Selecione um CLIENTE da tabela");
 			}
 			
 		}
 
 		else if (e.getSource() == btnRelatorioSala) {
+
 			try {
 
 				Sala sala = (Sala) modelTableSala.getSelectedKey();
 				
-				new RelatorioEmprestimo().openPdf(emprestimoControle.getEmprestimos(sala), sala.getNome(), RelatorioEmprestimo.TIPO_SALA);
+				new RelatorioEmprestimo().gerar(emprestimoControle.getEmprestimos(sala), sala.getNome(), RelatorioEmprestimo.TIPO_SALA);
 				
-			} catch (SistemaException ex) {
-				utilidades.msgError("Erro ao tentar gerar relatório");
+			} catch (Exception ex) {
+				utilidades.msgError("Selecione uma SALA da tabela");
 			}
 		}
 

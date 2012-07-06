@@ -13,10 +13,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import util.Utilidades;
+import entidade.Cliente;
 
 public class FramePrincipal extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static FramePrincipal framePrincipal;
 	
 	private Utilidades utilidades = Utilidades.getInstance();
 	
@@ -31,6 +34,8 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	private JMenuItem mntmSair;
 	private JMenuItem mntmCliente;
 	private JMenuItem mntmSala;
+	
+	private Cliente usuarioLogado;
 
 	/**
 	 * Create the frame.
@@ -84,6 +89,16 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		this.setSize(400, 300);
 		this.setVisible(true);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+		setPermissoes();
+	}
+	
+	public static FramePrincipal getInstance(){
+		if(framePrincipal == null){
+			framePrincipal = new FramePrincipal();
+		}
+		
+		return framePrincipal;
 	}
 
 	@Override
@@ -109,6 +124,25 @@ public class FramePrincipal extends JFrame implements ActionListener {
 			}
 		}
 
+	}
+	
+	private void setPermissoes(){
+		
+		if(usuarioLogado != null){
+			if(usuarioLogado.getPerfil() == Cliente.PERFIL_USUARIO){
+				mntmCliente.setEnabled(false);
+				mntmSala.setEnabled(false);
+			}
+		}
+		
+	}
+
+	public Cliente getUsuarioLogado() {
+		return usuarioLogado;
+	}
+
+	public void setUsuarioLogado(Cliente usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
 
 }
