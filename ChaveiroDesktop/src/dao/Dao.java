@@ -79,8 +79,6 @@ public abstract class Dao<T> {
 			sql += " ORDER BY " + orderBy + " ";
 		}
 		
-		System.out.println("SQL: "+sql);
-		
 		Query q = em.createQuery(sql);
 
 		if (parameters != null) {
