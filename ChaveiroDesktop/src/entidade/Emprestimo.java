@@ -28,8 +28,12 @@ public class Emprestimo implements Serializable {
     private Date dataEntrega;
 
 	@ManyToOne(fetch= FetchType.EAGER)
-    @JoinColumn(name = "cliente")
-    private Cliente cliente;
+    @JoinColumn(name = "clienteRetirada")
+    private Cliente clienteRetirada;
+
+	@ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name = "clienteEntrega")
+    private Cliente clienteEntrega;
 
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sala")
@@ -59,20 +63,28 @@ public class Emprestimo implements Serializable {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
 	public Sala getSala() {
 		return sala;
 	}
 
 	public void setSala(Sala sala) {
 		this.sala = sala;
+	}
+
+	public Cliente getClienteRetirada() {
+		return clienteRetirada;
+	}
+
+	public void setClienteRetirada(Cliente clienteRetirada) {
+		this.clienteRetirada = clienteRetirada;
+	}
+
+	public Cliente getClienteEntrega() {
+		return clienteEntrega;
+	}
+
+	public void setClienteEntrega(Cliente clienteEntrega) {
+		this.clienteEntrega = clienteEntrega;
 	}
 	
 }

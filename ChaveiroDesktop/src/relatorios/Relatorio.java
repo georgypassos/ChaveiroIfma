@@ -37,8 +37,12 @@ public abstract class Relatorio {
 			JasperPrint impressao = JasperFillManager.fillReport(relJasper, parametros, ds);
 
 			File destFile = new File(Utilidades.getTempFolder(), filePdf);
-			String destFileName = destFile.toString();
-
+			String destFileName = destFile.toString()+new java.util.Date();
+			
+			destFileName = destFileName.replaceAll(" ", "");
+			destFileName = destFileName.replaceAll(":", "");
+			destFileName += ".pdf";
+			
 			JasperExportManager.exportReportToPdfFile(impressao, destFileName);
 
 			if (open) {
@@ -59,7 +63,7 @@ public abstract class Relatorio {
 
 	private void setPdfName() {
 		filePdf = fileJasper.substring(0, fileJasper.indexOf("."));
-		filePdf += ".pdf";
+//		filePdf += ".pdf";
 	}
 
 	public String getFileJasper() {

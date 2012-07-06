@@ -17,9 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
+import relatorios.RelatorioEmprestimo;
 import util.MaxLengthDocument;
 import util.MyModelTable;
 import controles.ClienteControle;
+import controles.EmprestimoControle;
 import controles.SalaControle;
 import entidade.Cliente;
 import entidade.Sala;
@@ -32,6 +34,10 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 
 	private static TelaRelatorio tela;
 	
+	private EmprestimoControle emprestimoControle = EmprestimoControle.getInstance();
+	private ClienteControle clienteControle = ClienteControle.getInstance();
+	private SalaControle salaControle = SalaControle.getInstance();
+	
 	private JPanel painelCliente, painelSala;
 	private JTabbedPane painelTabbed;
 
@@ -40,9 +46,6 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 	private JTextField tfNomeSala;
 
 	private JButton btnRelatorioCliente, btnRelatorioSala;
-
-	private ClienteControle clienteControle = ClienteControle.getInstance();
-	private SalaControle salaControle = SalaControle.getInstance();
 	private JLabel lblErroCliente, lblErroSala;
 
 	public TelaRelatorio() {
@@ -60,7 +63,7 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		painelTabbed.add("Salas", painelSala);
 
 		JScrollPane scrollCliente = new JScrollPane();
-		scrollCliente.setBounds(25, 62, 358, 293);
+		scrollCliente.setBounds(25, 74, 358, 281);
 
 		JTable tabelaCliente = new JTable();
 		tabelaCliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -77,7 +80,7 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		lblErroCliente = new JLabel("");
 		lblErroCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		lblErroCliente.setForeground(Color.RED);
-		lblErroCliente.setBounds(159, 58, 166, 16);
+		lblErroCliente.setBounds(159, 48, 166, 16);
 		painelCliente.add(lblErroCliente);
 
 		tfNomeCliente = new JTextField(new MaxLengthDocument(Cliente.TAMANHO_MAX_NOME), "", 10);
@@ -88,12 +91,13 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		btnRelatorioCliente = new JButton("Gerar relat\u00F3rio");
 		btnRelatorioCliente.setIcon(new ImageIcon(TelaRelatorio.class.getResource("/imagens/btreport.png")));
 		btnRelatorioCliente.setBounds(134, 367, 145, 30);
+		btnRelatorioCliente.addActionListener(this);
 		painelCliente.add(btnRelatorioCliente);
 
 		// ---------------------------------------------------
 
 		JScrollPane scrollSala = new JScrollPane();
-		scrollSala.setBounds(25, 62, 358, 293);
+		scrollSala.setBounds(25, 74, 358, 281);
 
 		JTable tabelaSala = new JTable();
 		tabelaSala.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -110,7 +114,7 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		lblErroSala = new JLabel("");
 		lblErroSala.setHorizontalAlignment(SwingConstants.CENTER);
 		lblErroSala.setForeground(Color.RED);
-		lblErroSala.setBounds(159, 58, 166, 16);
+		lblErroSala.setBounds(159, 48, 166, 16);
 		painelSala.add(lblErroSala);
 
 		tfNomeSala = new JTextField();
@@ -121,6 +125,7 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		btnRelatorioSala = new JButton("Gerar relat\u00F3rio");
 		btnRelatorioSala.setIcon(new ImageIcon(TelaRelatorio.class.getResource("/imagens/btreport.png")));
 		btnRelatorioSala.setBounds(134, 367, 145, 30);
+		btnRelatorioSala.addActionListener(this);
 		painelSala.add(btnRelatorioSala);
 
 		//
@@ -148,10 +153,11 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 
 				Cliente cliente = (Cliente) modelTableCliente.getSelectedKey();
 				
-				
+				new RelatorioEmprestimo().openPdf(emprestimoControle.getEmprestimos(cliente), "Cliente");
 				
 			} catch (Exception ex) {
-				
+				ex.printStackTrace();
+				utilidades.msgError("Erro ao tentar gerar relatório");
 			}
 			
 		}
@@ -161,10 +167,11 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 
 				Sala sala = (Sala) modelTableSala.getSelectedKey();
 				
-				
+				new RelatorioEmprestimo().openPdf(emprestimoControle.getEmprestimos(sala), "Sala");
 				
 			} catch (Exception ex) {
-				
+				ex.printStackTrace();
+				utilidades.msgError("Erro ao tentar gerar relatório");
 			}
 		}
 
@@ -220,7 +227,7 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 
 			List<Sala> list = salaControle.consultaPorNome(nome);
 			for (Sala s : list) {
-				modelTableSala.addRowAndKey(s, s.getCodigo(), s.getStatusStr());
+				modelTableSala.addRowAndKey(s, s.getNome(), s.getStatusStr());
 			}
 
 			lblErroSala.setText("");

@@ -36,8 +36,11 @@ public class Cliente implements Serializable {
 	@Column(length=1)
 	private Integer perfil;
 
-    @OneToMany(mappedBy = "cliente")
-    private List<Emprestimo> listEmprestimo;
+    @OneToMany(mappedBy = "clienteRetirada")
+    private List<Emprestimo> listEmprestimoRetirada;
+
+    @OneToMany(mappedBy = "clienteEntrega")
+    private List<Emprestimo> listEmprestimoEntrega;
 	
 	public static final int PERFIL_USUARIO = 0;
 	public static final int PERFIL_ADMINISTRADOR = 1;
@@ -124,14 +127,20 @@ public class Cliente implements Serializable {
 		this.perfil = perfil;
 	}
 
-	public List<Emprestimo> getListEmprestimo() {
-		return listEmprestimo;
+	public List<Emprestimo> getListEmprestimoRetirada() {
+		return listEmprestimoRetirada;
 	}
 
-	public void setListEmprestimo(List<Emprestimo> listEmprestimo) {
-		this.listEmprestimo = listEmprestimo;
+	public void setListEmprestimoRetirada(List<Emprestimo> listEmprestimoRetirada) {
+		this.listEmprestimoRetirada = listEmprestimoRetirada;
 	}
-    
-	
+
+	public List<Emprestimo> getListEmprestimoEntrega() {
+		return listEmprestimoEntrega;
+	}
+
+	public void setListEmprestimoEntrega(List<Emprestimo> listEmprestimoEntrega) {
+		this.listEmprestimoEntrega = listEmprestimoEntrega;
+	}
 	
 }

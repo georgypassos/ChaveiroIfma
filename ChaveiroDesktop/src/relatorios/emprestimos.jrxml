@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="emprestimos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="222c80d6-ede3-4747-ab8a-bb7aa3c69fc6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tipoRelatorio" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Cliente"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="clienteEntrega" class="entidade.Cliente">
+		<fieldDescription><![CDATA[clienteEntrega]]></fieldDescription>
+	</field>
+	<field name="clienteRetirada" class="entidade.Cliente">
+		<fieldDescription><![CDATA[clienteRetirada]]></fieldDescription>
+	</field>
+	<field name="dataEntrega" class="java.util.Date">
+		<fieldDescription><![CDATA[dataEntrega]]></fieldDescription>
+	</field>
+	<field name="dataRetirada" class="java.util.Date">
+		<fieldDescription><![CDATA[dataRetirada]]></fieldDescription>
+	</field>
+	<field name="sala" class="entidade.Sala">
+		<fieldDescription><![CDATA[sala]]></fieldDescription>
+	</field>
+	<pageHeader>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement uuid="47a48452-49ae-4bb6-a257-d0c7d2dcc983" x="150" y="59" width="405" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["  "+$F{clienteRetirada}.getNome()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="49b6edb7-4006-421e-a0b0-86adcd80ccb2" x="0" y="0" width="555" height="59"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="28"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Empréstimos por " + $P{tipoRelatorio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="95ce361c-0e05-443b-9bd7-f1d8f53672c3" x="0" y="59" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipoRelatorio}+":"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4fc57e20-6722-4b3b-9f64-0b3a13b16f1d" x="127" y="19" width="70" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retirada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fc57e20-6722-4b3b-9f64-0b3a13b16f1d" x="197" y="19" width="144" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente de retirada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fc57e20-6722-4b3b-9f64-0b3a13b16f1d" x="341" y="19" width="70" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fc57e20-6722-4b3b-9f64-0b3a13b16f1d" x="411" y="19" width="144" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente de entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fc57e20-6722-4b3b-9f64-0b3a13b16f1d" x="0" y="19" width="127" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sala]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="2efb7235-1194-4bcf-9318-ef9980612775" x="0" y="0" width="127" height="20"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sala}.getNome()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM HH:mm">
+				<reportElement uuid="03c1e662-71be-4139-9847-c43ada4209ab" x="127" y="0" width="70" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataRetirada}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM HH:mm" isBlankWhenNull="true">
+				<reportElement uuid="dba05bf1-8cbf-487f-a384-00c9b917e341" x="341" y="0" width="70" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataEntrega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="debafbef-7aa7-441a-91da-7307dac4e157" x="197" y="0" width="144" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clienteRetirada}.getNome()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ee8de35a-2beb-4c1e-8642-f6ee741f4ca6" x="411" y="0" width="144" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clienteEntrega}.getNome()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="43" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7be087ac-0a05-4c3d-8d02-1bbdc000ee51" x="406" y="23" width="109" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="d13820d8-d54b-45f4-bb2b-bcc758968bd1" x="515" y="23" width="40" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy, HH:mm">
+				<reportElement uuid="ac25a8be-6f97-4db2-9f92-705415bec578" x="0" y="23" width="222" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

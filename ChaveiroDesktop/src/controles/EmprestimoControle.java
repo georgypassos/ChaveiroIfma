@@ -1,6 +1,11 @@
 package controles;
 
+import java.util.List;
+
 import dao.EmprestimoDAO;
+import entidade.Cliente;
+import entidade.Emprestimo;
+import entidade.Sala;
 
 public class EmprestimoControle extends Controle{
 	
@@ -19,7 +24,14 @@ public class EmprestimoControle extends Controle{
 		return emprestimoControle;
 	}
 	
+	public List<Emprestimo> getEmprestimos(Cliente cliente){
+		
+		return emprestimoDao.getEmprestimos(cliente);
+	}
 	
-	
+	public List<Emprestimo> getEmprestimos(Sala sala){
+		
+		return emprestimoDao.getEmprestimos(sala);
+	}
 	
 }

@@ -121,7 +121,7 @@ public class DialogEmprestimo extends MyDialog implements ActionListener{
 				Emprestimo emprestimo = new Emprestimo();
 				
 				emprestimo.setSala(sala);
-				emprestimo.setCliente(cliente);
+				emprestimo.setClienteRetirada(cliente);
 				emprestimo.setDataRetirada(new Date());
 				
 				salaDao.mudarStatus(sala.getIdsala(), Sala.STATUS_ABERTA);

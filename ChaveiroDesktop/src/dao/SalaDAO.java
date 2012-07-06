@@ -40,7 +40,7 @@ public class SalaDAO extends Dao<Sala> {
 
 	public List<Sala> consultaPorNome(String nome){
 		
-		String sql = "FROM Sala s WHERE s.codigo LIKE :p0 ORDER BY s.codigo ASC";
+		String sql = "FROM Sala s WHERE s.nome LIKE :p0 ORDER BY s.nome ASC";
 		
 		return search(sql, "%"+nome+"%");
 	}

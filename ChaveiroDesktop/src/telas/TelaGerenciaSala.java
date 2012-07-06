@@ -129,7 +129,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 	
 	private void cadastrar(){
 		try{
-			sala.setCodigo(tfcodigoSala.getText());
+			sala.setNome(tfcodigoSala.getText());
 			if(this.cbManutencao.isSelected()){
 				sala.setStatus(Sala.STATUS_INDISPONIVEL);
 			}

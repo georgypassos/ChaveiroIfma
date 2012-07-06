@@ -72,7 +72,7 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 					img = utilidades.imgBtSalaIndisponivel;
 				}
 				
-				String texto = s.getCodigo();
+				String texto = s.getNome();
 				
 				try {
 					texto += "<br><br><b>"+s.getUltimoCliente().getNome()+"</b>"+
@@ -129,7 +129,7 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		}
 		else if(s.getStatus() == Sala.STATUS_ABERTA){
 			
-			new DialogDevolucao(s.getUltimoEmprestimo());
+//			FIXME new DialogDevolucao(s.getUltimoEmprestimo());
 			 
 			carregarSalas();
 		}

@@ -18,7 +18,7 @@ public class Sala implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idsala;
 
-	private String codigo;
+	private String nome;
 
 	private Integer status;
 
@@ -42,12 +42,12 @@ public class Sala implements Serializable {
 		this.idsala = idsala;
 	}
 
-	public String getCodigo() {
-		return codigo;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Integer getStatus() {
@@ -97,7 +97,7 @@ public class Sala implements Serializable {
 		Emprestimo e = getUltimoEmprestimo();
 		if (e != null) {
 
-			return e.getCliente();
+			return e.getClienteRetirada();
 		}
 
 		return null;
