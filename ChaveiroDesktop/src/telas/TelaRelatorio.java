@@ -146,17 +146,19 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
+		
+		//TODO gerar relatorios por periodo
+		
 		if (e.getSource() == btnRelatorioCliente) {
 			
 			try {
 
 				Cliente cliente = (Cliente) modelTableCliente.getSelectedKey();
 				
-				new RelatorioEmprestimo().openPdf(emprestimoControle.getEmprestimos(cliente), "Cliente");
+				new RelatorioEmprestimo().openPdf(emprestimoControle.getEmprestimos(cliente), cliente.getNome(), RelatorioEmprestimo.TIPO_CLIENTE);
 				
-			} catch (Exception ex) {
-				ex.printStackTrace();
+			} catch (SistemaException ex) {
 				utilidades.msgError("Erro ao tentar gerar relatório");
 			}
 			
@@ -167,10 +169,9 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 
 				Sala sala = (Sala) modelTableSala.getSelectedKey();
 				
-				new RelatorioEmprestimo().openPdf(emprestimoControle.getEmprestimos(sala), "Sala");
+				new RelatorioEmprestimo().openPdf(emprestimoControle.getEmprestimos(sala), sala.getNome(), RelatorioEmprestimo.TIPO_SALA);
 				
-			} catch (Exception ex) {
-				ex.printStackTrace();
+			} catch (SistemaException ex) {
 				utilidades.msgError("Erro ao tentar gerar relatório");
 			}
 		}

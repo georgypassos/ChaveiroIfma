@@ -9,7 +9,9 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 import util.Utilidades;
+import excecoes.SistemaException;
 
 public abstract class Relatorio {
 
@@ -25,10 +27,31 @@ public abstract class Relatorio {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected String  openPdf(Collection list, HashMap parametros, boolean open) {
+	protected void openJasper(Collection list, HashMap parametros) throws SistemaException{
+		
+		try {
+
+			InputStream relJasper = getClass().getResourceAsStream(CAMINHO_RELATORIO + fileJasper);
+			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(list);
+			JasperPrint impressao = JasperFillManager.fillReport(relJasper, parametros, ds);
+
+			JasperViewer viewer = new JasperViewer(impressao, false);
+
+	        viewer.setVisible(true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			throw new SistemaException("Erro ao tentar gerar relatorio");
+		}
+		
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	protected String openPdf(Collection list, HashMap parametros, String nomeArquivo) throws SistemaException{
 
 		if (filePdf.trim().equalsIgnoreCase(""))
-			setPdfName();
+			setPdfName(nomeArquivo);
 
 		try {
 
@@ -37,35 +60,37 @@ public abstract class Relatorio {
 			JasperPrint impressao = JasperFillManager.fillReport(relJasper, parametros, ds);
 
 			File destFile = new File(Utilidades.getTempFolder(), filePdf);
-			String destFileName = destFile.toString()+new java.util.Date();
-			
-			destFileName = destFileName.replaceAll(" ", "");
-			destFileName = destFileName.replaceAll(":", "");
-			destFileName += ".pdf";
-			
+			String destFileName = destFile.toString();
+						
 			JasperExportManager.exportReportToPdfFile(impressao, destFileName);
 
-			if (open) {
-				Runtime.getRuntime().exec("cmd /c start " + destFileName);
-			}
+			Runtime.getRuntime().exec("cmd /c start " + destFileName);
 			
 			return destFileName;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			utilidades.msgError("Erro ao tentar gerar relatorio");
-			
-			return null;
+			throw new SistemaException("Erro ao tentar gerar relatorio");
 		}
 
 	}
-
-	private void setPdfName() {
+	
+	private void setPdfName(String nomeArquivo) {
 		filePdf = fileJasper.substring(0, fileJasper.indexOf("."));
-//		filePdf += ".pdf";
+		
+		if(nomeArquivo != null)
+			filePdf += "-"+nomeArquivo+"-";
+		
+		filePdf = filePdf.replaceAll(" ", "");
+		
+		String data = utilidades.getData(new java.util.Date(), "dd.MM.yyyy-HH.mm.ss");
+		
+		filePdf += data;
+		
+		filePdf += ".pdf";
 	}
-
+	
 	public String getFileJasper() {
 		return fileJasper;
 	}

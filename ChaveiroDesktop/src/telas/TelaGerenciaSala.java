@@ -136,7 +136,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 			saladao.inserir(sala);
 			JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
 		}catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 	

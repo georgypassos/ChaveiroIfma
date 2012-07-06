@@ -23,7 +23,7 @@ public class TesteRelatorio {
 		Sala s = new Sala();
 		s.setNome("Laboratorio 23");
 		
-		for(int i=0; i<100; i++){
+		for(int i=0; i<20; i++){
 			Emprestimo e = new Emprestimo();
 			e.setClienteEntrega(c1);
 			e.setClienteRetirada(c2);

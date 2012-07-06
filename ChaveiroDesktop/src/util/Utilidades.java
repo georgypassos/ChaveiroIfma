@@ -95,7 +95,7 @@ public class Utilidades {
 		return "<html>" + msg + "</html>";
 	}
 	
-	public boolean validacpf(String strCpf) { // formato XXX.XXX.XXX-XX
+	public boolean validacpf(String strCpf) { // formato ###.###.###-##
 
 		if (!strCpf.substring(0, 1).equals("")) {
 			try {
@@ -162,6 +162,9 @@ public class Utilidades {
 	}
 
 	public static File getTempFolder() {
+
+		//TODO apagar a pasta temporaria quando o sistema iniciar
+		
 		File dir = new File("TEMP_FILES");
 
 		if (!dir.isDirectory())
