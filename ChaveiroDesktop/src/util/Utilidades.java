@@ -1,5 +1,6 @@
 package util;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -158,6 +159,17 @@ public class Utilidades {
 			}
 		} else
 			return false;
+	}
+
+	public static File getTempFolder() {
+		File dir = new File("TEMP_FILES");
+
+		if (!dir.isDirectory())
+			dir.mkdir();
+
+		dir.deleteOnExit();
+
+		return dir;
 	}
 
 	public int getYesNoOption(String msg) {

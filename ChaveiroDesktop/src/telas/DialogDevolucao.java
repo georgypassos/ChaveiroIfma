@@ -98,7 +98,7 @@ public class DialogDevolucao extends MyDialog implements ActionListener{
 
 				emprestimo.setDataEntrega(new Date());
 				
-				emprestimoDao.atualizar(emprestimo);
+				emprestimoDao.salvar(emprestimo);
 				
 				salaDao.mudarStatus(emprestimo.getSala().getIdsala(), Sala.STATUS_FECHADA);
 				

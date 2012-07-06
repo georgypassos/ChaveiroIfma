@@ -4,7 +4,7 @@ import entidade.Emprestimo;
 
 public class EmprestimoDAO extends Dao<Emprestimo> {
 	
-	private static final EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
+	private static EmprestimoDAO emprestimoDAO;
 	
 	private EmprestimoDAO(){
 		super(Emprestimo.class);
@@ -12,19 +12,16 @@ public class EmprestimoDAO extends Dao<Emprestimo> {
 	
 	public static EmprestimoDAO getInstance(){
 		
+		if(emprestimoDAO == null){
+			emprestimoDAO = new EmprestimoDAO();
+		}
+		
 		return emprestimoDAO;
 	}
 	
-	public void inserir(Emprestimo e){
+	public Emprestimo salvar(Emprestimo e){
 		
-		merge(e);
-		
-	}
-	
-	public void atualizar(Emprestimo e){
-		
-		merge(e);
-		
+		return merge(e);
 	}
 	
 }

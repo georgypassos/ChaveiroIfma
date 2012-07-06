@@ -20,6 +20,8 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	
+	private static TelaEmprestimo tela;
+	
 	private JPanel painelEmprestimo;
 	private SalaDAO salaDAO = SalaDAO.getInstance();
 	private List<Sala> listSala;
@@ -40,15 +42,13 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		this.setVisible(true);
 	}
 
-	public static MyInternalFrame getInstance() {
-		
-		if (tela == null) {
-            tela = new TelaEmprestimo();
-        }
-		
-        return tela;
+	public static TelaEmprestimo getInstance() {
+		if(tela == null){
+			tela = new TelaEmprestimo();
+		}
+		return tela;
 	}
-
+	
 	//FIXME fazer esse método mais variável
 	public void carregarSalas(){
 		

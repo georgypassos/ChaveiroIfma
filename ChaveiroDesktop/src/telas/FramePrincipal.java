@@ -26,7 +26,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	protected final JDesktopPane desktop = new JDesktopPane();
 
 	private JMenu mnGerencia;
-	private JButton btnEmprestimo, btnRelatrios;
+	private JButton btnEmprestimo, btnRelatorios;
 	private JMenu mnSistema;
 	private JMenuItem mntmSair;
 	private JMenuItem mntmCliente;
@@ -68,9 +68,10 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		mntmSala.addActionListener(this);
 		mnGerencia.add(mntmSala);
 		
-		btnRelatrios = new JButton("Relat\u00F3rios");
-		btnRelatrios.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/mnrelatorios.png")));
-		menuBar.add(btnRelatrios);
+		btnRelatorios = new JButton("Relat\u00F3rios");
+		btnRelatorios.setIcon(new ImageIcon(FramePrincipal.class.getResource("/imagens/mnrelatorios.png")));
+		btnRelatorios.addActionListener(this);
+		menuBar.add(btnRelatorios);
 		
 		getContentPane().add(desktop);
 		
@@ -91,8 +92,8 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		if (e.getSource() == btnEmprestimo) {
 			TelaEmprestimo.getInstance().show(desktop);
 		}
-		else if (e.getSource() == btnRelatrios) {
-			
+		else if (e.getSource() == btnRelatorios) {
+			TelaRelatorio.getInstance().show(desktop);
 		}
 		else if (e.getSource() == mntmCliente) {
 			TelaGerenciaCliente.getInstance().show(desktop);
@@ -101,14 +102,13 @@ public class FramePrincipal extends JFrame implements ActionListener {
 			TelaGerenciaSala.getInstance().show(desktop);
 		}
 		else if (e.getSource() == mntmSair) {
-			
 			int opcao = utilidades.getYesNoOption("Deseja realmente fechar o sistema?");
 			
 			if(opcao == JOptionPane.YES_OPTION){
 				System.exit(0);
 			}
-
 		}
 
 	}
+
 }

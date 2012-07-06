@@ -6,13 +6,17 @@ import entidade.Sala;
 
 public class SalaDAO extends Dao<Sala> {
     
-    private static final SalaDAO salaDAO = new SalaDAO();
+    private static SalaDAO salaDAO;
     
     private SalaDAO(){
         super(Sala.class);
     }
     
     public static SalaDAO getInstance(){
+    	if(salaDAO == null){
+    		salaDAO = new SalaDAO();
+    	}
+    	
         return salaDAO;
     }
     
@@ -32,18 +36,13 @@ public class SalaDAO extends Dao<Sala> {
     	String sql = "FROM Sala s";
     	
     	return search(sql, null);
-    	
     }
-    
-    public static void main(String[] args) {
-        SalaDAO s = SalaDAO.getInstance();
-        Sala sala = new Sala();
-        sala.setCodigo("sala8");
-        sala.setStatus(Sala.STATUS_ABERTA);
-        s.inserir(sala);
-        
-        System.out.println("-->> "+s.consultar().get(0).getStatus());
-        
-    }
-    
+
+	public List<Sala> consultaPorNome(String nome){
+		
+		String sql = "FROM Sala s WHERE s.codigo LIKE :p0 ORDER BY s.codigo ASC";
+		
+		return search(sql, "%"+nome+"%");
+	}
+	
 }

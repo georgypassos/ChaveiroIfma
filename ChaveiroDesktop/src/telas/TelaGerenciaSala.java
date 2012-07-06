@@ -22,6 +22,8 @@ import entidade.Sala;
 public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
+
+	private static TelaGerenciaSala tela;
 	
 	private JPanel painelCadastro;
 	private JTextField tfcodigoSala;
@@ -85,14 +87,12 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 		utilidades.centralizaJanela(this, 40);
 		this.setVisible(true);
 	}
-	
-	public static MyInternalFrame getInstance() {
-		
-		if (tela == null) {
-            tela = new TelaGerenciaSala();
-        }
-		
-        return tela;
+
+	public static TelaGerenciaSala getInstance() {
+		if(tela == null){
+			tela = new TelaGerenciaSala();
+		}
+		return tela;
 	}
 	
 	@Override

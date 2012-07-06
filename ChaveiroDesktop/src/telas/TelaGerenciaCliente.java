@@ -36,6 +36,8 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 
 	private static final long serialVersionUID = 1L;
 	
+	private static TelaGerenciaCliente tela;
+	
 	private JPanel painelCadastro, painelConsulta;
 	private JTabbedPane painelTabbed;
 	
@@ -212,12 +214,11 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 		this.setVisible(true);
 	}
 	
-	public static MyInternalFrame getInstance() {
-		if (tela == null) {
-            tela = new TelaGerenciaCliente();
-        }
-		
-        return tela;
+	public static TelaGerenciaCliente getInstance() {
+		if(tela == null){
+			tela = new TelaGerenciaCliente();
+		}
+		return tela;
 	}
 	
 	private class OuvinteConsulta implements KeyListener{

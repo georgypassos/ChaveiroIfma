@@ -6,14 +6,17 @@ import entidade.Cliente;
 
 public class ClienteDAO extends Dao<Cliente> {
 
-	private static final ClienteDAO clienteDAO = new ClienteDAO();
+	private static ClienteDAO clienteDAO;
 
 	private ClienteDAO() {
 		super(Cliente.class);
 	}
 
 	public static ClienteDAO getInstance() {
-
+		if(clienteDAO == null){
+			clienteDAO = new ClienteDAO();
+		}
+		
 		return clienteDAO;
 	}
 
@@ -35,7 +38,7 @@ public class ClienteDAO extends Dao<Cliente> {
 
 	public List<Cliente> consultaPorNome(String nome){
 		
-		String sql = "FROM Cliente c WHERE c.nome LIKE :p0 ORDER BY c.nome";
+		String sql = "FROM Cliente c WHERE c.nome LIKE :p0 ORDER BY c.nome ASC";
 		
 		return search(sql, "%"+nome+"%");
 	}
