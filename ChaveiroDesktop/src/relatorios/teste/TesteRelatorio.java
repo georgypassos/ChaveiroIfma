@@ -1,4 +1,4 @@
-package relatorio.teste;
+package relatorios.teste;
 
 import java.util.ArrayList;
 import java.util.Date;
