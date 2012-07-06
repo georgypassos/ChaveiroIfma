@@ -212,7 +212,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 	@Override
 	protected void initialize() {
 		carregarTabela("");
-		cliente = new Cliente();
+		novo();
 		utilidades.centralizaJanela(this, 40);
 	}
 	
@@ -266,6 +266,7 @@ public class TelaGerenciaCliente extends MyInternalFrame implements ActionListen
 
 	private void novo(){
 		cliente = new Cliente();
+		cbPerfis.setSelectedIndex(0);
 		limparCampos();
 	}
 	

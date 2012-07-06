@@ -27,14 +27,14 @@ public class EmprestimoControle extends Controle{
 		return emprestimoControle;
 	}
 	
-	public List<Emprestimo> getEmprestimos(Cliente cliente){
+	public List<Emprestimo> getEmprestimos(Cliente cliente, Integer mes, Boolean hoje){
 		
-		return emprestimoDao.getEmprestimos(cliente);
+		return emprestimoDao.getEmprestimos(cliente, mes, hoje);
 	}
 	
-	public List<Emprestimo> getEmprestimos(Sala sala){
+	public List<Emprestimo> getEmprestimos(Sala sala, Integer mes, Boolean hoje){
 		
-		return emprestimoDao.getEmprestimos(sala);
+		return emprestimoDao.getEmprestimos(sala, mes, hoje);
 	}
 
 	public Emprestimo efetuarEmprestimo(DialogEmprestimo dialog) throws SistemaException {

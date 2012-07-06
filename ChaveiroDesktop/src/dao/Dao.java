@@ -71,18 +71,22 @@ public abstract class Dao<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> search(String sql, Object... parameters) {
+	public List<T> search(String sql, String orderBy, Object... parameters) {
 
 		em = emf.createEntityManager();
+		
+		if(orderBy != null && !orderBy.equals("")){
+			sql += " ORDER BY " + orderBy + " ";
+		}
+		
+		System.out.println("SQL: "+sql);
 		
 		Query q = em.createQuery(sql);
 
 		if (parameters != null) {
-			
 			for(int i=0; i<parameters.length; i++){
 				q.setParameter("p" + i, parameters[i]);
 			}
-			
 		}
 		
 		List<T> list = q.getResultList();

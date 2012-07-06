@@ -89,8 +89,7 @@ public class FrameLogin extends JFrame implements ActionListener {
 		this.setResizable(false);
 		this.setVisible(true);
 		
-		//FIXME sair do sistema quando o cliente fechar a janela
-		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	private class OuvinteCpf implements KeyListener{

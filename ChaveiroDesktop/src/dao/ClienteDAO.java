@@ -39,7 +39,7 @@ public class ClienteDAO extends Dao<Cliente> {
 		
 		String sql = "FROM Cliente c WHERE c.nome LIKE :p0 ORDER BY c.nome ASC";
 		
-		return search(sql, "%"+nome+"%");
+		return search(sql, null, "%"+nome+"%");
 	}
 	
 	public boolean existeCpf(Cliente cliente){
@@ -50,10 +50,10 @@ public class ClienteDAO extends Dao<Cliente> {
 		
 		if(cliente.getIdcliente() != null){
 			sql +=  " AND c.idcliente != :p1" ;
-			list = search(sql, cliente.getCpf(), cliente.getIdcliente());
+			list = search(sql, null, cliente.getCpf(), cliente.getIdcliente());
 		}
 		else{
-			list = search(sql, cliente.getCpf());
+			list = search(sql, null, cliente.getCpf());
 		}
 		
 		if(list != null && list.size()>0){
@@ -67,7 +67,7 @@ public class ClienteDAO extends Dao<Cliente> {
 
 		String sql = "FROM Cliente c WHERE c.cpf = :p0 AND c.senha = :p1";
 
-		List<Cliente> list = search(sql, cliente.getCpf(), cliente.getSenha());
+		List<Cliente> list = search(sql, null, cliente.getCpf(), cliente.getSenha());
 
 		if (list.size() > 0)
 			return list.get(0);

@@ -24,6 +24,7 @@ import controles.ClienteControle;
 import controles.EmprestimoControle;
 import controles.SalaControle;
 import entidade.Cliente;
+import entidade.Emprestimo;
 import entidade.Sala;
 import excecoes.SistemaException;
 import javax.swing.ImageIcon;
@@ -41,7 +42,7 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 	private JTextField tfNomeCliente;
 	private JTextField tfNomeSala;
 
-	private JButton btnRelatorioCliente, btnRelatorioSala;
+	private JButton btnGerar;
 	private JLabel lblErroCliente, lblErroSala;
 
 	private EmprestimoControle emprestimoControle = EmprestimoControle.getInstance();
@@ -51,8 +52,11 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 	private TelaRelatorio() {
 		super("Gera\u00E7\u00E3o de relat\u00F3rios", "/imagens/mnrelatorios.png");
 
+		getContentPane().setLayout(null);
+		
 		painelTabbed = new JTabbedPane();
-		setContentPane(painelTabbed);
+		painelTabbed.setBounds(0, 0, 402, 396);
+		getContentPane().add(painelTabbed);
 
 		painelCliente = new JPanel();
 		painelCliente.setLayout(null);
@@ -90,12 +94,6 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		tfNomeCliente.addKeyListener(new OuvinteTextField());
 		painelCliente.add(tfNomeCliente);
 
-		btnRelatorioCliente = new JButton("Gerar relat\u00F3rio");
-		btnRelatorioCliente.setIcon(new ImageIcon(TelaRelatorio.class.getResource("/imagens/btreport.png")));
-		btnRelatorioCliente.setBounds(134, 367, 145, 30);
-		btnRelatorioCliente.addActionListener(this);
-		painelCliente.add(btnRelatorioCliente);
-
 		// --- painel da sala
 
 		JScrollPane scrollSala = new JScrollPane();
@@ -124,13 +122,15 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		tfNomeSala.addKeyListener(new OuvinteTextField());
 		painelSala.add(tfNomeSala);
 
-		btnRelatorioSala = new JButton("Gerar relat\u00F3rio");
-		btnRelatorioSala.setIcon(new ImageIcon(TelaRelatorio.class.getResource("/imagens/btreport.png")));
-		btnRelatorioSala.setBounds(134, 367, 145, 30);
-		btnRelatorioSala.addActionListener(this);
-		painelSala.add(btnRelatorioSala);
+		// ---- botões de ação
+		
+		btnGerar = new JButton("Gerar relat\u00F3rio");
+		btnGerar.setBounds(126, 408, 145, 30);
+		getContentPane().add(btnGerar);
+		btnGerar.setIcon(new ImageIcon(TelaRelatorio.class.getResource("/imagens/btreport.png")));
+		btnGerar.addActionListener(this);
 
-		this.setSize(419, 471);
+		this.setSize(414, 480);
 	}
 	
 	@Override
@@ -152,13 +152,15 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		
 		//TODO gerar relatorios por periodo
 		
-		if (e.getSource() == btnRelatorioCliente) {
+		if (painelTabbed.getSelectedIndex() == 0) {
 			
 			try {
 
 				Cliente cliente = (Cliente) modelTableCliente.getSelectedKey();
 				
-				new RelatorioEmprestimo().gerar(emprestimoControle.getEmprestimos(cliente), cliente.getNome(), RelatorioEmprestimo.TIPO_CLIENTE);
+				List<Emprestimo> list = emprestimoControle.getEmprestimos(cliente, null, null);
+				
+				new RelatorioEmprestimo().gerar(list, cliente.getNome(), RelatorioEmprestimo.TIPO_CLIENTE);
 				
 			} catch (Exception ex) {
 				utilidades.msgError("Selecione um CLIENTE da tabela");
@@ -166,13 +168,15 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 			
 		}
 
-		else if (e.getSource() == btnRelatorioSala) {
+		else if (painelTabbed.getSelectedIndex() == 1) {
 
 			try {
 
 				Sala sala = (Sala) modelTableSala.getSelectedKey();
 				
-				new RelatorioEmprestimo().gerar(emprestimoControle.getEmprestimos(sala), sala.getNome(), RelatorioEmprestimo.TIPO_SALA);
+				List<Emprestimo> list = emprestimoControle.getEmprestimos(sala, null, null);
+				
+				new RelatorioEmprestimo().gerar(list, sala.getNome(), RelatorioEmprestimo.TIPO_SALA);
 				
 			} catch (Exception ex) {
 				utilidades.msgError("Selecione uma SALA da tabela");

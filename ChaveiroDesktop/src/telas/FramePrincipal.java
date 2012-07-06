@@ -90,7 +90,6 @@ public class FramePrincipal extends JFrame implements ActionListener {
 		this.setVisible(true);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
-		setPermissoes();
 //		addBackground();
 	}
 	
@@ -135,18 +134,12 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	}
 	
 	private void setPermissoes(){
-		
 		if(usuarioLogado != null){
-			
-			System.out.println("usuario logado diferente de NULL");
 			if(usuarioLogado.getPerfil() == Cliente.PERFIL_USUARIO){
-				System.out.println("usuario logado e' to tipo USUARIO");
-				
 				mntmCliente.setEnabled(false);
 				mntmSala.setEnabled(false);
 			}
 		}
-		
 	}
 
 	public Cliente getUsuarioLogado() {
@@ -155,6 +148,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 
 	public void setUsuarioLogado(Cliente usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
+		setPermissoes();
 	}
 
 }

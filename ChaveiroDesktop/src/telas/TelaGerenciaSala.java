@@ -94,6 +94,8 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 		btnNovo = new JButton("Novo");
 		btnNovo.setBounds(24, 177, 93, 30);
 		btnNovo.setIcon(new ImageIcon(TelaGerenciaSala.class.getResource("/imagens/btnew.png")));
+		btnNovo.addActionListener(this);
+		
 		painelCadastro.setLayout(null);
 		painelCadastro.add(tfNomeSala);
 		painelCadastro.add(lbCodigoSala);
@@ -153,7 +155,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 	@Override
 	protected void initialize() {
 		carregarTabela("");
-		sala = new Sala();
+		novo();
 		utilidades.centralizaJanela(this, 40);
 	}
 	
@@ -209,6 +211,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 
 	private void novo(){
 		sala = new Sala();
+		cbStatus.setSelectedIndex(0);
 		limparCampos();
 	}
 

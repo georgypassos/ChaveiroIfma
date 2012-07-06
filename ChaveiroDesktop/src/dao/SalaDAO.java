@@ -45,14 +45,14 @@ public class SalaDAO extends Dao<Sala> {
     	
     	String sql = "FROM Sala s";
     	
-    	return search(sql, null);
+    	return search(sql, null, null);
     }
 
 	public List<Sala> consultaPorNome(String nome){
 		
 		String sql = "FROM Sala s WHERE s.nome LIKE :p0 ORDER BY s.nome ASC";
 		
-		return search(sql, "%"+nome+"%");
+		return search(sql, null, "%"+nome+"%");
 	}
 	
 }
