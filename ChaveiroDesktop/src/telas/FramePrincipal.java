@@ -137,7 +137,11 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	private void setPermissoes(){
 		
 		if(usuarioLogado != null){
+			
+			System.out.println("usuario logado diferente de NULL");
 			if(usuarioLogado.getPerfil() == Cliente.PERFIL_USUARIO){
+				System.out.println("usuario logado e' to tipo USUARIO");
+				
 				mntmCliente.setEnabled(false);
 				mntmSala.setEnabled(false);
 			}
