@@ -1,0 +1,1 @@
+<?php	//Inicia a sessão	session_start();	//Elimina os dados da sessão	unset($_SESSION['id'], $_SESSION['nome'], $_SESSION['login']);		//Encerra a sessão	session_destroy();	header("Location:login.php");?>
