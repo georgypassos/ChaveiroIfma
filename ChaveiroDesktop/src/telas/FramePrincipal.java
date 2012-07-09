@@ -29,6 +29,8 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	 */
 	protected final JDesktopPane desktop = new JDesktopPane();
 
+	private JMenuBar menuBar;
+	
 	private JMenu mnGerencia;
 	private JButton btnEmprestimo, btnRelatorios;
 	private JMenu mnSistema;
@@ -47,7 +49,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrameLogin.class.getResource("/imagens/pnsistema.png")));
 		
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		mnSistema = new JMenu("Sistema");
@@ -136,8 +138,7 @@ public class FramePrincipal extends JFrame implements ActionListener {
 	private void setPermissoes(){
 		if(usuarioLogado != null){
 			if(usuarioLogado.getPerfil() == Cliente.PERFIL_USUARIO){
-				mntmCliente.setEnabled(false);
-				mntmSala.setEnabled(false);
+				menuBar.remove(mnGerencia);
 			}
 		}
 	}

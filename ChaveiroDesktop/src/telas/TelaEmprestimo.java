@@ -54,7 +54,6 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		return tela;
 	}
 	
-	//FIXME fazer esse método mais variável (adaptável quando o numero de salas aumentar)
 	public void carregarSalas(){
 
 		listSala = salaDAO.consultar();
