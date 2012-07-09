@@ -131,13 +131,13 @@ public class TelaRelatorio extends MyInternalFrame implements ActionListener {
 		btnGerar.addActionListener(this);
 
 		this.setSize(414, 480);
+		utilidades.centralizaJanela(this, 40);
 	}
 	
 	@Override
 	protected void initialize() {
 		carregarClientes("");
 		carregarSalas("");
-		utilidades.centralizaJanela(this, 40);
 	}
 	
 	public static TelaRelatorio getInstance() {

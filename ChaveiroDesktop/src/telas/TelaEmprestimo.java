@@ -1,7 +1,6 @@
 package telas;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -12,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import dao.SalaDAO;
 import entidade.Sala;
@@ -23,6 +23,8 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 	private static TelaEmprestimo tela;
 	
 	private JPanel painelEmprestimo;
+	private JScrollPane scroll;
+	
 	private SalaDAO salaDAO = SalaDAO.getInstance();
 	private List<Sala> listSala;
 	
@@ -31,14 +33,18 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		
 		painelEmprestimo = new JPanel();
 		
-		this.setSize(458, 444);
-		this.setMaximumSize(new Dimension(458, 600));
+		scroll = new JScrollPane();
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.setContentPane(scroll);
+		
+		this.setSize(490, 515);
+		utilidades.centralizaJanela(this, 40);
 	}
 
 	@Override
 	protected void initialize() {
 		carregarSalas();
-		utilidades.centralizaJanela(this, 40);
 	}
 	
 	public static TelaEmprestimo getInstance() {
@@ -50,10 +56,11 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 	
 	//FIXME fazer esse método mais variável (adaptável quando o numero de salas aumentar)
 	public void carregarSalas(){
-		
-		atualizaPainel();
-		
+
 		listSala = salaDAO.consultar();
+		int qtdSalas = listSala.size();
+		
+		atualizaPainel(qtdSalas);
 		
 		if(listSala != null && listSala.size() > 0){
 			
@@ -104,11 +111,13 @@ public class TelaEmprestimo extends MyInternalFrame implements ActionListener{
 		
 	}
 	
-	private void atualizaPainel(){
+	private void atualizaPainel(int qtd){
 		painelEmprestimo = null;
 		painelEmprestimo = new JPanel();
-		painelEmprestimo.setLayout(new GridLayout(3, 4, 2, 2));
-		this.setContentPane(painelEmprestimo);
+		
+		scroll.setViewportView(painelEmprestimo);
+		
+		painelEmprestimo.setLayout(new GridLayout(0, 3, 1, 1));
 	}
 
 	@Override

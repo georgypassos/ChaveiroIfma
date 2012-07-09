@@ -44,16 +44,13 @@ public class EmprestimoControle extends Controle{
 		if(cliente != null){
 			
 			Sala sala = dialog.getSala();
+			sala.setStatus(Sala.STATUS_ABERTA);
 			
 			Emprestimo emprestimo = new Emprestimo();
 			
 			emprestimo.setSala(sala);
 			emprestimo.setClienteRetirada(cliente);
 			emprestimo.setDataRetirada(new Date());
-			
-			//FIXME verificar se quando salvar emprestimo, pode ser salva a sala tambem
-			
-			SalaControle.getInstance().mudarStatus(sala.getIdsala(), Sala.STATUS_ABERTA);
 			
 			return emprestimoDao.salvar(emprestimo);
 		}
@@ -74,7 +71,7 @@ public class EmprestimoControle extends Controle{
 			emprestimo.setClienteEntrega(cliente);
 			emprestimo.setDataEntrega(new Date());
 			
-			SalaControle.getInstance().mudarStatus(emprestimo.getSala().getIdsala(), Sala.STATUS_FECHADA);
+			emprestimo.getSala().setStatus(Sala.STATUS_FECHADA);
 			
 			return emprestimoDao.salvar(emprestimo);
 		}

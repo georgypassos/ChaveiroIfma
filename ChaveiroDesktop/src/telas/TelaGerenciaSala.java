@@ -150,13 +150,13 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 		painelConsulta.add(btnExcluir);
 		
 		this.setSize(407, 432);
+		utilidades.centralizaJanela(this, 40);
 	}
 
 	@Override
 	protected void initialize() {
 		carregarTabela("");
 		novo();
-		utilidades.centralizaJanela(this, 40);
 	}
 	
 	public static TelaGerenciaSala getInstance() {
@@ -188,6 +188,7 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 			sala = salaControle.salvar(this);
 			carregarTabela("");
 			TelaEmprestimo.getInstance().initialize();
+			TelaRelatorio.getInstance().initialize();
 		}
 		
 		else if(e.getSource() == btnCancelar){
@@ -200,6 +201,8 @@ public class TelaGerenciaSala extends MyInternalFrame implements ActionListener{
 		else if(e.getSource() == btnExcluir){
 			salaControle.excluir(this);
 			carregarTabela("");
+			TelaEmprestimo.getInstance().initialize();
+			TelaRelatorio.getInstance().initialize();
 		}
 		else if(e.getSource() == btnEditar){
 			sala = (Sala) modelTableConsulta.getSelectedKey();

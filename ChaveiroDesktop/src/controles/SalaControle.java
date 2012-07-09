@@ -55,11 +55,6 @@ public class SalaControle extends Controle {
 		
 	}
 	
-	public Sala mudarStatus(int id, int status){
-        
-        return salaDao.mudarStatus(id, status);
-    }
-	
 	public void excluir(TelaGerenciaSala tela){
 		
 		try {

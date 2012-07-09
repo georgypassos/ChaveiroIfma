@@ -106,8 +106,6 @@ public class ClienteControle extends Controle {
 
 		/** verficando campos obrigatorios */
 		
-		//TODO verificar porque quando o nome do cliente esta' preenchido, mas esta' vindo vazio para esse IF
-		
 		//TODO remover máscaras dos objetos JFormattedTextField para inserir no banco
 		
 		if(cliente.getNome().trim().equals(""))

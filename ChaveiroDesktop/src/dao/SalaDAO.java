@@ -35,12 +35,6 @@ public class SalaDAO extends Dao<Sala> {
 		return get(id);
 	}
 
-    public Sala mudarStatus(int id, int status){
-        Sala sala = (Sala) this.get(id);
-        sala.setStatus(status);
-        return merge(sala);
-    }
-    
     public List<Sala> consultar(){
     	
     	String sql = "FROM Sala s";

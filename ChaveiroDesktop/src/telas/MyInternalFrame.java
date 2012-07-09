@@ -22,7 +22,6 @@ public abstract class MyInternalFrame extends JInternalFrame{
     	utilidades.formataJanela(this, srcImagem);
     	
     	this.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
-
             @Override
             public void internalFrameClosed(InternalFrameEvent arg0) {
                 init = false;
